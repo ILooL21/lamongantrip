@@ -1,0 +1,112 @@
+/* Contact.css */
+.container-contact {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 2%;
+}
+
+.container-menu-form-contact {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.menu-contact {
+  width: 40%;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu-contact-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-contact-header h2 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.menu-contact-content p {
+  font-size: 14px;
+  color: #333;
+}
+
+.menu-contact a {
+  text-decoration: none;
+  color: #007f73;
+  align-items: center;
+}
+
+.menu-contact a:hover {
+  text-decoration: underline;
+}
+
+.icon-phone,
+.icon-mail {
+  font-size: 20px;
+  color: #007f73;
+}
+
+.container-form-contact {
+  width: 55%;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.container-form-contact-up {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-contact {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-contact-input {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 0.75rem;
+}
+
+.form-contact-textarea {
+  padding: 0.75rem;
+  margin-top: 1.25rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.container-button-contact {
+  width: 100%;
+  text-align: end;
+  margin-top: 15px;
+}
+
+.button-contact-save {
+  background: #007f73;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.button-contact-save:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.button-contact-save:hover:not(:disabled) {
+  background: #005f56;
+}

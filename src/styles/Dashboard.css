@@ -1,0 +1,122 @@
+.wrapper-body {
+  display: flex;
+  min-height: 100vh; /* Pastikan memenuhi tinggi layar */
+}
+
+.container-navbar-dashboard {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  min-height: 100vh; /* Pastikan navbar mencapai bawah */
+  padding-top: 24px;
+  background-color: #fff;
+  border-right: solid 2px #f5f5f5;
+}
+
+.navbar-dashboard-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.navbar-dashboard-list div {
+  height: auto;
+  padding: 4px 0px;
+  padding-inline: 16px;
+}
+.navbar-dashboard-list div a {
+  font-size: 20px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
+  padding: 8px 24px 8px 0px;
+  display: flex;
+  border-radius: 8px;
+}
+.navbar-dashboard-list .isActive {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.navbar-dashboard-list div:hover {
+  background-color: #f0f0f0;
+}
+.icon-navbar-dashboard {
+  margin-right: 16px;
+  margin-left: 8px;
+}
+.container-dashboard {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Memastikan mengisi sisa ruang */
+  padding: 40px;
+}
+.container-content-dashboard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 48px;
+  padding: 24px;
+  width: 100%;
+  height: auto;
+}
+.content-dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  width: 100px;
+  height: 100px;
+  border-radius: 16px;
+  background-color: #007f73;
+  cursor: pointer;
+}
+.content-dashboard:hover {
+  background-color: #fff;
+  color: #007f73;
+  border: solid 2px #007f73;
+}
+.content-dashboard a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content-dashboard a:hover {
+  color: #007f73;
+}
+.container-dashboard-header span {
+  color: #007f73;
+}
+.breadcrumb-dashboard a {
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+}
+.breadcrumb-dashboard a:hover {
+  color: #007f73;
+  text-decoration: underline;
+}
+.container-dashboard-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 24px;
+  height: auto;
+  margin-top: 32px;
+  box-shadow: 0px 0px 16px rgb(0, 0, 0, 0.2);
+}
+.container-dashboard-main h2 {
+  font-size: 32px;
+  font-weight: 700;
+}

@@ -1,0 +1,48 @@
+.form-profile-update {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 0 1rem 2rem 2rem;
+}
+
+.form-profile-update h1 {
+  text-align: center;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.form-profile-update input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1.25rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+small {
+  font-size: 0.8rem;
+  color: red;
+}
+
+.form-profile-update input:disabled {
+  background-color: #eee;
+  cursor: not-allowed;
+}
+
+.form-profile-update button {
+  width: 105%;
+  padding: 0.75rem;
+  background-color: #87c0cd;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-profile-update button:hover {
+  background-color: #78bbcb;
+}
