@@ -13,6 +13,7 @@ import ContactPages from "./pages/ContactPages.jsx";
 import Dasboard from "./pages/admin/Dashboard.jsx";
 import UserManagementPages from "./pages/admin/UserManagement.jsx";
 import MailManagementPages from "./pages/admin/MailManagement.jsx";
+import ArticleManagementPages from "./pages/admin/ArticleManagement.jsx";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
           {
             path: "mails",
             element: <MailManagementPages />,
+          },
+          {
+            path: "articles",
+            element: <ArticleManagementPages />,
           },
         ],
       },

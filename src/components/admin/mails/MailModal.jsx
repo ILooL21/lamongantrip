@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { Button, message, Modal } from "antd";
-import "../../../styles/MailModal.css";
+import { Button, Modal } from "antd";
 import { useReplyMailMutation } from "../../../slices/contactApiSlice";
+import "../../../styles/MailModal.css";
 
 const MailModal = ({ onClose, selectedMailData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,7 +43,9 @@ const MailModal = ({ onClose, selectedMailData }) => {
     try {
       const res = await replyMail({ id: formData.id, message: formData.reply_message }).unwrap();
 
-      console.log(res);
+      if (!isLoading) {
+        console.log("Reply mail response:", res);
+      }
     } catch (error) {
       console.error("Error replying mail:", error);
     }

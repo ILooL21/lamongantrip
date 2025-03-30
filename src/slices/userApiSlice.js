@@ -1,5 +1,5 @@
 import { apiSlice } from "./apiSlice";
-const USERS_URL = "/users";
+const USERS_URL = "api/users";
 
 const user = JSON.parse(localStorage.getItem("Access-token"));
 
@@ -7,7 +7,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (data) => ({
-        url: `/auth/login`,
+        url: `api/auth/login`,
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

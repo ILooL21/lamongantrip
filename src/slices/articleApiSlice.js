@@ -1,23 +1,24 @@
 import { apiSlice } from "./apiSlice";
-const CONTACT_URL = "api/contact";
+const ARTICLE_URL = "api/articles";
 
 const user = JSON.parse(localStorage.getItem("Access-token"));
 
-export const contactApiSlice = apiSlice.injectEndpoints({
+export const articleApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    createContact: builder.mutation({
+    createArticle: builder.mutation({
       query: (data) => ({
-        url: CONTACT_URL + "/",
+        url: ARTICLE_URL + "/",
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${user}`,
         },
         body: data,
       }),
     }),
-    getAllMail: builder.query({
+    getAllArticle: builder.query({
       query: () => ({
-        url: CONTACT_URL + "/",
+        url: ARTICLE_URL + "/",
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -25,19 +26,30 @@ export const contactApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
-    getMailById: builder.query({
-      query: (id) => ({
-        url: CONTACT_URL + "/" + id,
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user}`,
-        },
-      }),
-    }),
-    deleteMail: builder.mutation({
+    getArticleById: builder.mutation({
       query: (data) => ({
-        url: CONTACT_URL + "/" + data.id + "/delete",
+        url: ARTICLE_URL + "/" + data.id,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user}`,
+        },
+      }),
+    }),
+    updateArticle: builder.mutation({
+      query: (data) => ({
+        url: `${ARTICLE_URL}/${data.get("id_artikel")}/update`,
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${user}`,
+        },
+        body: data,
+      }),
+    }),
+    deleteArticle: builder.mutation({
+      query: (data) => ({
+        url: ARTICLE_URL + "/" + data.id + "/delete",
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -45,18 +57,7 @@ export const contactApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
-    replyMail: builder.mutation({
-      query: (data) => ({
-        url: CONTACT_URL + "/" + data.id + "/reply",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user}`,
-        },
-        body: data,
-      }),
-    }),
   }),
 });
 
-export const { useCreateContactMutation, useGetAllMailQuery, useGetMailByIdQuery, useDeleteMailMutation, useReplyMailMutation } = contactApiSlice;
+export const { useCreateArticleMutation, useGetAllArticleQuery, useGetArticleByIdMutation, useUpdateArticleMutation, useDeleteArticleMutation } = articleApiSlice;

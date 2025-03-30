@@ -7,6 +7,7 @@ import { useLazyGetActiveUserDataQuery } from "../slices/userApiSlice";
 import img from "../assets/logo.jpeg";
 import { useEffect } from "react";
 import "../styles/Header.css";
+import Swal from "sweetalert2";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
@@ -31,7 +32,13 @@ const Header = () => {
 
     if (error && error.status === 401) {
       dispatch(logout());
-      navigate("/auth");
+      Swal.fire({
+        icon: "error",
+        title: "Session Expired",
+        text: "Sesi Anda telah berakhir, silakan login kembali",
+      }).then((isConfirmed) => {
+        if (isConfirmed) navigate("/auth");
+      });
     }
   }, [isLogin, getActiveUserData, dispatch, navigate, error]);
 
@@ -101,7 +108,7 @@ const Header = () => {
           </div>
 
           <Link
-            to="/news"
+            to="/articles"
             className="nav-link"
             onClick={() => setIsMenuOpen(false)}>
             Berita

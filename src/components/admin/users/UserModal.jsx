@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useGetUserDataMutation, useRegisterMutation, useUpdateUserDataMutation } from "../../../slices/userApiSlice";
-import { Button, Modal } from "antd";
+import { Button, Input, Modal } from "antd";
 import "../../../styles/UserModal.css";
 import { Radio } from "antd";
 import Swal from "sweetalert2";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 const UserModal = ({ isDetailModal, isEditModal, isAddModal, id_user, onClose }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -186,13 +187,13 @@ const UserModal = ({ isDetailModal, isEditModal, isAddModal, id_user, onClose })
           {isDetailModal ? null : (
             <div className="form-group">
               <label htmlFor="password">Password</label>
-              <input
-                type="password"
+              <Input.Password
                 className="form-control"
                 id="password"
                 name="password"
                 onChange={handleChange}
                 disabled={isDetailModal}
+                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
               />
             </div>
           )}

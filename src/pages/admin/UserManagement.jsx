@@ -7,6 +7,7 @@ import Sidebar from "../../components/admin/Sidebar";
 import UserModal from "../../components/admin/users/UserModal";
 import Swal from "sweetalert2";
 import "../../styles/UserManagement.css";
+import Search from "antd/es/input/Search";
 
 const UserManagementPages = () => {
   const [listUsers, setListUsers] = useState([]);
@@ -35,8 +36,8 @@ const UserManagementPages = () => {
   // Fungsi untuk menutup modal
   const closeModal = () => {
     setShowModal(false);
-    setSelectedUserId(null);
     setModalType("");
+    setSelectedUserId(null);
   };
 
   // Fungsi untuk merender tabel berdasarkan pencarian
@@ -140,11 +141,10 @@ const UserManagementPages = () => {
                   <option value="email">Email</option>
                   <option value="role">Role</option>
                 </select>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Cari Username"
+                <Search
+                  placeholder="Cari User"
                   value={searchTerm}
+                  allowClear
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
@@ -187,7 +187,6 @@ const UserManagementPages = () => {
         </div>
       </div>
 
-      {/* MODAL */}
       {showModal && (
         <UserModal
           isDetailModal={modalType === "detail"}

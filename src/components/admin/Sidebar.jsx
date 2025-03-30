@@ -23,8 +23,8 @@ const Sidebar = ({ activeMenu }) => {
             Tempat Wisata
           </a>
         </div>
-        <div className={activeMenu === "news" ? "isActive" : ""}>
-          <a href="/admin/news">
+        <div className={activeMenu === "articles" ? "isActive" : ""}>
+          <a href="/admin/articles">
             <SignatureOutlined className="icon-navbar-dashboard" />
             Artikel
           </a>

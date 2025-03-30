@@ -1,24 +1,16 @@
 import { useEffect, useState } from "react";
 import { Breadcrumb } from "antd";
-import { DeleteOutlined, EditOutlined, EyeOutlined, LockOutlined, MailOutlined, SendOutlined } from "@ant-design/icons";
 import Header from "../../components/Header";
 import Sidebar from "../../components/admin/Sidebar";
-import MailModal from "../../components/admin/mails/MailModal";
 import Swal from "sweetalert2";
 import { useDeleteMailMutation, useGetAllMailQuery } from "../../slices/contactApiSlice";
 import "../../styles/MailManagement.css";
+import Search from "antd/es/input/Search";
 
 const MailManagementPages = () => {
   const [listMails, setListMails] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCategories, setSearchCategories] = useState("email");
-  const [showModal, setShowModal] = useState(false);
-  const [selectedMailData, setSelectedMailData] = useState({
-    id: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
 
   const { data: mailData, isLoading } = useGetAllMailQuery();
   const [deleteMail] = useDeleteMailMutation();
@@ -28,28 +20,6 @@ const MailManagementPages = () => {
       setListMails(mailData);
     }
   }, [mailData, isLoading]);
-
-  // Fungsi untuk membuka modal
-  const openModal = (mailId) => {
-    setSelectedMailData({
-      id: mailId,
-      email: listMails.find((mail) => mail.id === mailId).email,
-      subject: listMails.find((mail) => mail.id === mailId).subject,
-      message: listMails.find((mail) => mail.id === mailId).message,
-    });
-    setShowModal(true);
-  };
-
-  // Fungsi untuk menutup modal
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedMailData({
-      id: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
-  };
 
   // Fungsi untuk merender tabel berdasarkan pencarian
   const renderRowTable = () => {
@@ -63,14 +33,9 @@ const MailManagementPages = () => {
           <td>{mail.message}</td>
           <td>
             <button
-              className="btn btn-warning"
-              onClick={() => openModal(mail.id)}>
-              <SendOutlined />
-            </button>
-            <button
-              className="btn btn-danger"
+              className="btn btn-info"
               onClick={() => handleDeleteMail(mail.id)}>
-              <DeleteOutlined />
+              Selesai
             </button>
           </td>
         </tr>
@@ -81,13 +46,14 @@ const MailManagementPages = () => {
     let mailId = parseInt(id);
 
     Swal.fire({
-      title: "Apakah Anda yakin?",
-      text: "Pengguna akan dihapus secara permanen",
+      title: "Apakah Mail Sudah Dibalas?",
+      text: "Mail yang dihapus tidak dapat dikembalikan!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Ya, hapus!",
+      confirmButtonText: "Ya, Selesai!",
+      cancelButtonText: "Batalkan",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -116,7 +82,7 @@ const MailManagementPages = () => {
           <div className="container-dashboard-header">
             <Breadcrumb
               className="breadcrumb-dashboard"
-              items={[{ title: <a href="/admin/dashboard">Home</a> }, { title: "Pengguna" }]}
+              items={[{ title: <a href="/admin/dashboard">Home</a> }, { title: "Mail" }]}
             />
           </div>
           <div className="container-dashboard-body">
@@ -131,11 +97,10 @@ const MailManagementPages = () => {
                   <option value="subject">Subject</option>
                   <option value="message">Message</option>
                 </select>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Cari Email"
+                <Search
+                  placeholder="Cari Mail"
                   value={searchTerm}
+                  allowClear
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
@@ -177,13 +142,6 @@ const MailManagementPages = () => {
           </div>
         </div>
       </div>
-
-      {showModal && (
-        <MailModal
-          selectedMailData={selectedMailData}
-          onClose={closeModal}
-        />
-      )}
     </>
   );
 };
