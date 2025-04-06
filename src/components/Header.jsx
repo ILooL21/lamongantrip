@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../slices/authSlice";
 import { DownOutlined, UserOutlined, MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import { useLazyGetActiveUserDataQuery } from "../slices/userApiSlice";
-import img from "../assets/logo.jpeg";
+import img from "../assets/logo.jpg";
 import { useEffect } from "react";
 import "../styles/Header.css";
 import Swal from "sweetalert2";
@@ -30,7 +30,7 @@ const Header = () => {
       getActiveUserData();
     }
 
-    if (error && error.status === 401) {
+    if (error && (error.status === 401 || error.status === 404)) {
       dispatch(logout());
       Swal.fire({
         icon: "error",

@@ -1,7 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import FormAuth from "./pages/AuthForm.jsx";
@@ -14,6 +14,8 @@ import Dasboard from "./pages/admin/Dashboard.jsx";
 import UserManagementPages from "./pages/admin/UserManagement.jsx";
 import MailManagementPages from "./pages/admin/MailManagement.jsx";
 import ArticleManagementPages from "./pages/admin/ArticleManagement.jsx";
+import DestinationManagementPages from "./pages/admin/DestinationManagement.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 const router = createBrowserRouter([
   {
@@ -61,9 +63,26 @@ const router = createBrowserRouter([
             path: "articles",
             element: <ArticleManagementPages />,
           },
+          {
+            path: "destinations",
+            element: <DestinationManagementPages />,
+          },
         ],
       },
     ],
+  },
+  {
+    path: "/not-found",
+    element: <NotFound />,
+  },
+  {
+    path: "*",
+    element: (
+      <Navigate
+        to="/not-found"
+        replace
+      />
+    ),
   },
 ]);
 

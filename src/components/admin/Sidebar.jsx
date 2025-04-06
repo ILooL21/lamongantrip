@@ -17,8 +17,8 @@ const Sidebar = ({ activeMenu }) => {
             Pengguna
           </a>
         </div>
-        <div className={activeMenu === "destination" ? "isActive" : ""}>
-          <a href="/admin/destination">
+        <div className={activeMenu === "destinations" ? "isActive" : ""}>
+          <a href="/admin/destinations">
             <BarsOutlined className="icon-navbar-dashboard" />
             Tempat Wisata
           </a>

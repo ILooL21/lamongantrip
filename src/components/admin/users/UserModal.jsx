@@ -17,8 +17,8 @@ const UserModal = ({ isDetailModal, isEditModal, isAddModal, id_user, onClose })
   });
   const [loading, setLoading] = useState(true);
   const [getUserData] = useGetUserDataMutation();
-  const [updateUserData] = useUpdateUserDataMutation();
-  const [createUserData] = useRegisterMutation();
+  const [updateUserData, { isLoading: loadingUpdateUser }] = useUpdateUserDataMutation();
+  const [createUserData, { isLoading: loadingCreateUser }] = useRegisterMutation();
 
   // Fetch data jika modal detail atau edit dibuka
   useEffect(() => {
@@ -124,20 +124,30 @@ const UserModal = ({ isDetailModal, isEditModal, isAddModal, id_user, onClose })
         open={isModalOpen}
         onCancel={handleCancel}
         loading={loading}
+        width={{
+          xs: "90%",
+          sm: "80%",
+          md: "70%",
+          lg: "60%",
+          xl: "50%",
+          xxl: "40%",
+        }}
         footer={[
           isAddModal ? (
             <Button
               key="submit"
               type="primary"
-              onClick={createUserHandler}>
-              Tambah
+              onClick={createUserHandler}
+              loading={loadingCreateUser}>
+              {loadingCreateUser ? "Simpan" : "Loading..."}
             </Button>
           ) : isEditModal ? (
             <Button
               key="submit"
               type="primary"
-              onClick={updateUserHandler}>
-              Simpan
+              onClick={updateUserHandler}
+              loading={loadingUpdateUser}>
+              {loadingUpdateUser ? "Simpan" : "Loading..."}
             </Button>
           ) : null,
           <Button

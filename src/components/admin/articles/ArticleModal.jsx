@@ -19,8 +19,8 @@ const ArticleModal = ({ isDetailModal, isEditModal, isAddModal, id_artikel, onCl
   const [previewImage, setPreviewImage] = useState(null);
 
   const [getArticleById] = useGetArticleByIdMutation();
-  const [updateArticleData] = useUpdateArticleMutation();
-  const [createArticleData] = useCreateArticleMutation();
+  const [createArticleData, { isLoading: loadingCreateArticle }] = useCreateArticleMutation();
+  const [updateArticleData, { isLoading: loadingUpdateArticle }] = useUpdateArticleMutation();
 
   const formArticleData = useMemo(() => {
     const data = new FormData();
@@ -66,9 +66,7 @@ const ArticleModal = ({ isDetailModal, isEditModal, isAddModal, id_artikel, onCl
 
       fetchData();
     }
-    if (isAddModal) {
-      setLoading(false);
-    }
+    setLoading(false);
   }, [getArticleById, isDetailModal, isEditModal, isAddModal, id_artikel]);
 
   const showModal = () => {
@@ -190,20 +188,30 @@ const ArticleModal = ({ isDetailModal, isEditModal, isAddModal, id_artikel, onCl
       loading={loading}
       centered
       style={{ top: 5 }}
+      width={{
+        xs: "90%",
+        sm: "80%",
+        md: "70%",
+        lg: "60%",
+        xl: "50%",
+        xxl: "40%",
+      }}
       footer={[
         isEditModal ? (
           <Button
             key="submit"
             type="primary"
-            onClick={updateArticleHandler}>
-            Simpan
+            onClick={updateArticleHandler}
+            loading={loadingUpdateArticle}>
+            {loadingUpdateArticle ? "Loading..." : "Simpan"}
           </Button>
         ) : isAddModal ? (
           <Button
             key="submit"
             type="primary"
-            onClick={createArticleHandler}>
-            Tambah
+            onClick={createArticleHandler}
+            loading={loadingCreateArticle}>
+            {loadingCreateArticle ? "Loading..." : "Tambah"}
           </Button>
         ) : null,
         <Button
@@ -221,7 +229,7 @@ const ArticleModal = ({ isDetailModal, isEditModal, isAddModal, id_artikel, onCl
             encType="multipart/form-data">
             <div className="form-group">
               <label>Gambar</label>
-              {isDetailModal ? (
+              {isDetailModal && formData.gambar ? (
                 <img
                   src={import.meta.env.VITE_API_URL + formData.gambar}
                   alt={formData.judul}
