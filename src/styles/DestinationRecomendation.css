@@ -1,0 +1,74 @@
+.destination-recommendation-page {
+  padding: 40px 20px;
+}
+
+.akinator-layout {
+  display: flex;
+  align-items: flex-start; /* atau center tergantung preferensi */
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.character-image {
+  width: 40%;
+  height: auto;
+}
+
+.question-container {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.speech-bubble {
+  background: #ffffff;
+  padding: 20px 24px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 1.1rem;
+  position: relative;
+  max-width: 100%;
+  width: 100%;
+  text-align: left;
+}
+
+.speech-bubble::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: -20px; /* geser sedikit ke kiri untuk sesuai dengan 40% karakter */
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-right: 20px solid #ffffff;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.navigation-buttons button {
+  padding: 10px 20px;
+  background-color: #007f73;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.navigation-buttons button:hover:not(:disabled) {
+  background-color: #005f56;
+}
+
+.navigation-buttons button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+

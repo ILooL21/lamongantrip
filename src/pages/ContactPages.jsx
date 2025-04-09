@@ -5,6 +5,7 @@ import { FacebookFilled, InstagramOutlined, MailOutlined, PhoneOutlined, XOutlin
 import { useCreateContactMutation } from "../slices/contactApiSlice";
 import "../styles/Contact.css";
 import Swal from "sweetalert2";
+import InstallButton from "../components/InstallButton";
 
 const ContactPages = () => {
   const [email, setEmail] = useState("");
@@ -46,6 +47,7 @@ const ContactPages = () => {
   return (
     <>
       <Header />
+      <InstallButton />
       <div className="container-contact">
         <div className="container-menu-form-contact">
           <div className="menu-contact">
@@ -117,7 +119,7 @@ const ContactPages = () => {
               <div className="form-contact">
                 <input
                   type="text"
-                  placeholder="Enter Subject"
+                  placeholder="Masukkan Subjek"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                   className="form-contact-input"
@@ -134,7 +136,7 @@ const ContactPages = () => {
                 className="form-contact-textarea"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="Enter message"></textarea>
+                placeholder="Masukkan Pesan"></textarea>
             </div>
             <div className="container-button-contact">
               <button

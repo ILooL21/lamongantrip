@@ -25,6 +25,15 @@ export const destinationApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
+    getDestinationByName: builder.mutation({
+      query: (data) => ({
+        url: `${DESTINATION_URL}/details/${data.nama}`,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    }),
     createDestination: builder.mutation({
       query: (data) => ({
         url: DESTINATION_URL + "/",
@@ -60,4 +69,4 @@ export const destinationApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAllDestinationsQuery, useGetDestinationByIdMutation, useCreateDestinationMutation, useDeleteDestinationMutation, useUpdateDestinationMutation } = destinationApiSlice;
+export const { useGetAllDestinationsQuery, useGetDestinationByIdMutation, useGetDestinationByNameMutation, useCreateDestinationMutation, useDeleteDestinationMutation, useUpdateDestinationMutation } = destinationApiSlice;

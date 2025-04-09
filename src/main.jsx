@@ -16,6 +16,29 @@ import MailManagementPages from "./pages/admin/MailManagement.jsx";
 import ArticleManagementPages from "./pages/admin/ArticleManagement.jsx";
 import DestinationManagementPages from "./pages/admin/DestinationManagement.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import ArticleListPages from "./pages/ArticleList.jsx";
+import ArticleDetailPages from "./pages/ArticleDetail.jsx";
+import DestinationListPages from "./pages/DestinationList.jsx";
+import DestinationDetailPages from "./pages/DestinationDetail.jsx";
+import DestinationRecomendationPages from "./pages/DestinationRecomendation.jsx";
+import { registerSW } from "virtual:pwa-register";
+
+registerSW();
+
+window.pwaState = {
+  deferredPrompt: null,
+  onPromptReady: () => {}, // akan diisi nanti
+};
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  console.log("📦 beforeinstallprompt triggered globally");
+  e.preventDefault();
+  window.pwaState.deferredPrompt = e;
+
+  if (typeof window.pwaState.onPromptReady === "function") {
+    window.pwaState.onPromptReady();
+  }
+});
 
 const router = createBrowserRouter([
   {
@@ -34,6 +57,26 @@ const router = createBrowserRouter([
   {
     path: "/contact-us",
     element: <ContactPages />,
+  },
+  {
+    path: "/articles",
+    element: <ArticleListPages />,
+  },
+  {
+    path: "/article/:id",
+    element: <ArticleDetailPages />,
+  },
+  {
+    path: "/destination/:jenis?",
+    element: <DestinationListPages />,
+  },
+  {
+    path: "/destination/detail/:nama",
+    element: <DestinationDetailPages />,
+  },
+  {
+    path: "/rekomendasi-wisata",
+    element: <DestinationRecomendationPages />,
   },
   {
     path: "/",

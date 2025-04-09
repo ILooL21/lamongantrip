@@ -8,6 +8,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import Header from "../components/Header";
 import "../styles/Profile.css";
 import Swal from "sweetalert2";
+import InstallButton from "../components/InstallButton";
 
 const ProfilePages = () => {
   const [username, setUsername] = useState("");
@@ -79,6 +80,7 @@ const ProfilePages = () => {
   ) : (
     <>
       <Header />
+      <InstallButton />
       <div>
         <form
           onSubmit={updateProfile}

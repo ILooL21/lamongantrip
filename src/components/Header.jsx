@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../slices/authSlice";
 import { DownOutlined, UserOutlined, MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import { useLazyGetActiveUserDataQuery } from "../slices/userApiSlice";
-import img from "../assets/logo.jpg";
+import img from "../assets/logo.png";
 import { useEffect } from "react";
 import "../styles/Header.css";
 import Swal from "sweetalert2";
@@ -77,29 +77,29 @@ const Header = () => {
             <button
               className="dropdown-toggle"
               onClick={toggleCategoryDropdown}>
-              Spot Wisata <DownOutlined />
+              Tempat Wisata <DownOutlined />
             </button>
             <div className={`dropdown-menu ${isCategoryDropdownOpen ? "active" : ""}`}>
               <Link
-                to="/destination"
+                to="/destination/"
                 className="dropdown-item"
                 onClick={() => setIsMenuOpen(false)}>
                 Semua Wisata
               </Link>
               <Link
-                to="/destination?category=alam"
+                to="/destination/alam"
                 className="dropdown-item"
                 onClick={() => setIsMenuOpen(false)}>
                 Wisata Alam
               </Link>
               <Link
-                to="/destination?category=buatan"
+                to="/destination/buatan"
                 className="dropdown-item"
                 onClick={() => setIsMenuOpen(false)}>
                 Wisata Buatan
               </Link>
               <Link
-                to="/destination?category=religi"
+                to="/destination/religi"
                 className="dropdown-item"
                 onClick={() => setIsMenuOpen(false)}>
                 Wisata Religi
