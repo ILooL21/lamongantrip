@@ -44,14 +44,14 @@ const ArticleModal = ({ isDetailModal, isEditModal, isAddModal, id_artikel, onCl
             .unwrap()
             .then((res) => {
               setFormData({
-                id_artikel: res.id_artikel || "",
-                gambar: res.gambar || "",
-                penulis: res.penulis || "",
-                judul: res.judul || "",
-                isi: res.isi || "",
-                tipe: res.tipe || "",
+                id_artikel: res[0].id_artikel || "",
+                gambar: res[0].gambar || "",
+                penulis: res[0].penulis || "",
+                judul: res[0].judul || "",
+                isi: res[0].isi || "",
+                tipe: res[0].tipe || "",
                 tags:
-                  res.tags
+                  res[0].tags
                     .join("")
                     .split(",")
                     .map((tag) => tag.trim())

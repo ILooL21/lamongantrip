@@ -16,15 +16,7 @@ const DestinationDetailPages = () => {
 
   const [getDestinationData, { isLoading, error }] = useGetDestinationByNameMutation();
 
-  if (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Tempat wisata tidak ditemukan",
-    }).then(() => {
-      window.location.href = "/destination";
-    });
-  }
+  console.log(error);
 
   useEffect(() => {
     if (nama) {
@@ -61,7 +53,7 @@ const DestinationDetailPages = () => {
             title: "Oops...",
             text: "Data Tempat Wisata tidak ditemukan",
           }).then(() => {
-            window.location.href = "/destination";
+            window.location.href = "/not-found";
           });
         }
       };

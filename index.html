@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,18 +13,18 @@
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
   <script type="module">
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("/public/sw.js")
-          .then((registration) => {
-            console.log("Service Worker registered with scope:", registration.scope);
+    async function requestNotificationPermission() {
+      if ('serviceWorker' in navigator && 'Notification' in window) {
+        navigator.serviceWorker.register('/public/sw.js')
+          .then(registration => {
+            return Notification.requestPermission();
           })
-          .catch((error) => {
-            console.error("Service Worker registration failed:", error);
+          .catch(error => {
+            console.error('Service Worker registration failed:', error);
           });
-      });
+      }
     }
+    requestNotificationPermission();
   </script>
 </body>
 

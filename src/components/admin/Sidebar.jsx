@@ -1,7 +1,11 @@
 import { BarsOutlined, HomeOutlined, MailOutlined, SignatureOutlined, UserOutlined } from "@ant-design/icons";
+import { useCountMailQuery } from "../../slices/contactApiSlice";
 import "../../styles/Dashboard.css";
+import { Badge } from "antd";
 
 const Sidebar = ({ activeMenu }) => {
+  const { data: mailCount, isLoading } = useCountMailQuery();
+
   return (
     <div className="container-navbar-dashboard">
       <div className="navbar-dashboard-list">
@@ -30,9 +34,14 @@ const Sidebar = ({ activeMenu }) => {
           </a>
         </div>
         <div className={activeMenu === "mails" ? "isActive" : ""}>
-          <a href="/admin/mails">
-            <MailOutlined className="icon-navbar-dashboard" />
-            Email
+          <a
+            href="/admin/mails"
+            style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", paddingInline: "0" }}>
+              <MailOutlined className="icon-navbar-dashboard" />
+              <span>Email</span>
+            </div>
+            {!isLoading && mailCount > 0 && <Badge count={mailCount} />}
           </a>
         </div>
       </div>

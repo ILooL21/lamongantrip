@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Card, Row, Col } from "antd";
+import img from "../assets/no-result-data.webp";
 
 import Swal from "sweetalert2";
 import Header from "../components/Header";
@@ -48,7 +49,6 @@ const DestinationListPages = () => {
     return val.replace(/\b\w/g, (char) => char.toUpperCase());
   };
 
-  // buat nama_tempat waduk-gondang
   const formattingNameLinkDestinations = (val) => {
     return val.replace(/\s+/g, "-").toLowerCase();
   };
@@ -61,34 +61,44 @@ const DestinationListPages = () => {
         <h1>{jenis ? `Tempat Wisata ${jenis.charAt(0).toUpperCase() + jenis.slice(1)}` : "Semua Tempat Wisata"}</h1>
       </div>
       <div className="container-destination-list">
-        <Row gutter={[16, 16]}>
-          {filteredDestinations.map((item) => (
-            <Col
-              key={item.id_tempat_wisata}
-              xs={24}
-              sm={12}
-              md={12}
-              lg={6}
-              xl={6}>
-              <Card
-                hoverable
-                className="destination-card"
-                onClick={() => (window.location.href = `/destination/detail/${formattingNameLinkDestinations(item.nama_tempat)}`)}
-                cover={
-                  <img
-                    alt={item.nama_tempat}
-                    src={import.meta.env.VITE_API_URL + item.gambar}
-                    className="destination-image"
-                  />
-                }>
-                <Card.Meta
-                  title={capitalizeEachFirstLetter(item.nama_tempat)}
-                  description={item.jenis}
-                />
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        {filteredDestinations.length === 0 ? (
+          <div
+            className="no-data"
+            style={{ textAlign: "center", color: "#999" }}>
+            <img
+              src={img}
+              alt="No results"
+              style={{ width: 220, marginBottom: 16, opacity: 0.5 }}
+            />
+            <h2>Tidak ada data tujuan wisata</h2>
+          </div>
+        ) : (
+          <Row gutter={[16, 16]}>
+            {filteredDestinations.map((item) => (
+              <Col
+                xs={24}
+                sm={12}
+                md={8}
+                lg={6}
+                key={item.id_tempat_wisata}>
+                <Card
+                  hoverable
+                  cover={
+                    <img
+                      alt={item.nama_tempat}
+                      src={`${import.meta.env.VITE_API_URL}${item.gambar}`}
+                      className="card-image"
+                      style={{ height: 200, objectFit: "cover" }}
+                    />
+                  }
+                  onClick={() => (window.location.href = `/destination/detail/${formattingNameLinkDestinations(item.nama_tempat)}`)}>
+                  <h3>{capitalizeEachFirstLetter(item.nama_tempat)}</h3>
+                  {!jenis && <p>Wisata {capitalizeEachFirstLetter(item.jenis)}</p>}
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        )}
       </div>
     </div>
   );

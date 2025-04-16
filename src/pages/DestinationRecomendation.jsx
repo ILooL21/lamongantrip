@@ -1,10 +1,11 @@
 import Header from "../components/Header";
 import karakterImg from "../assets/mascot.png";
 import "../styles/DestinationRecomendation.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Radio, Checkbox, Col, Row } from "antd";
 import Swal from "sweetalert2";
 import InstallButton from "../components/InstallButton";
+import { useGetRecommendationsMutation, useGetUserRecommendationsLogMutation } from "../slices/recommendationApiSlice";
 
 const questions = [
   {
@@ -108,6 +109,7 @@ const questions = [
 const DestinationRecomendationPages = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
+  const [listRecomendation, setListRecommendation] = useState([]);
   const [answer, setAnswer] = useState({
     escape: null,
     relaxation: null,
@@ -140,6 +142,61 @@ const DestinationRecomendationPages = () => {
 
   const isLogin = localStorage.getItem("Access-token");
 
+  const [getRecommendations] = useGetRecommendationsMutation();
+  const [getRecommendationsLog, { isLoading }] = useGetUserRecommendationsLogMutation();
+
+  useEffect(() => {
+    const fetchRecommendationsLog = async () => {
+      try {
+        const res = await getRecommendationsLog().unwrap();
+        if (res) {
+          setListRecommendation(res);
+        }
+      } catch (err) {
+        console.error("Error fetching recommendations:", err);
+      }
+    };
+
+    if (isLogin) {
+      fetchRecommendationsLog();
+    }
+  }, [isLogin, getRecommendationsLog]);
+
+  const handleKirimJawaban = async () => {
+    if (Object.values(answer).every((value) => value !== null)) {
+      await getRecommendations(answer)
+        .unwrap()
+        .then(() => {
+          Swal.fire({
+            icon: "success",
+            title: "Rekomendasi Ditemukan!",
+            text: "Kami telah menemukan rekomendasi tempat wisata untuk Anda.",
+            showCancelButton: false,
+            confirmButtonText: "Lihat Rekomendasi",
+            confirmButtonColor: "#3085d6",
+          }).then((result) => {
+            // reload page
+            if (result.isConfirmed) {
+              window.location.reload();
+            }
+          });
+        })
+        .catch((err) => {
+          console.error(err);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Terjadi kesalahan saat mendapatkan rekomendasi.",
+          });
+        });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Silahkan jawab semua pertanyaan",
+      });
+    }
+  };
   const handleAnswer = (value) => {
     const question = questions[currentQuestionIndex];
     if (question.type_question === "multiple") {
@@ -166,6 +223,10 @@ const DestinationRecomendationPages = () => {
     }
   };
 
+  const formattingNameLinkDestinations = (val) => {
+    return val.replace(/\s+/g, "-").toLowerCase();
+  };
+
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
@@ -183,35 +244,72 @@ const DestinationRecomendationPages = () => {
           <div className="question-container">
             {/* 👋 Halaman sambutan */}
             {!isStarted ? (
-              <>
-                <div className="speech-bubble">
-                  <h1>Selamat datang!</h1>
-                  <p>Saya di sini untuk memberi kamu rekomendasi tempat wisata di Lamongan.</p>
-                  <p>Bisakah kamu menjawab beberapa pertanyaan saya?</p>
-                </div>
+              isLogin ? (
+                <>
+                  {isLoading && listRecomendation.length === 0 ? (
+                    <div className="speech-bubble">
+                      <h1>Loading...</h1>
+                      <p>Mohon tunggu sebentar.</p>
+                    </div>
+                  ) : listRecomendation.length > 0 ? (
+                    <>
+                      <div className="speech-bubble">
+                        <h2>Selamat datang kembali!</h2>
+                        <p>Kamu sudah mendapatkan rekomendasi sebelumnya.</p>
 
-                <div className="navigation-buttons">
-                  <button
-                    className="start-button"
-                    onClick={() => {
-                      if (isLogin) {
+                        <ul className="mt-4 space-y-3">
+                          {listRecomendation.map((item) => (
+                            <li
+                              key={item.id}
+                              style={{ cursor: "pointer" }}
+                              onClick={() => (window.location.href = `/destination/detail/${formattingNameLinkDestinations(item.nama_tempat_wisata)}`)}>
+                              <p>
+                                <strong>{item.nama_tempat_wisata}</strong>
+                              </p>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <p className="mt-6">Klik Tempat Wisata untuk melihat detailnya.</p>
+                        <p>Silahkan klik tombol di bawah untuk mendapat rekomendasi yang lain.</p>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="speech-bubble">
+                      <h1>Selamat datang!</h1>
+                      <p>Saya di sini untuk memberi kamu rekomendasi tempat wisata di Lamongan.</p>
+                      <p>Bisakah kamu menjawab beberapa pertanyaan saya?</p>
+                    </div>
+                  )}
+                  <div className="navigation-buttons">
+                    <button
+                      className="start-button"
+                      onClick={() => {
                         setIsStarted(true);
-                      } else {
-                        Swal.fire({
-                          icon: "error",
-                          title: "Belum Login",
-                          text: "Silahkan login terlebih dahulu",
-                        }).then((res) => {
-                          if (res.isConfirmed) {
-                            window.location.href = "/auth";
-                          }
-                        });
-                      }
-                    }}>
-                    Cari Rekomendasi
-                  </button>
-                </div>
-              </>
+                      }}>
+                      {listRecomendation.length > 0 ? "Cari Rekomendasi Lagi" : "Cari Rekomendasi"}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="speech-bubble">
+                    <h1>Kamu Belum Login!</h1>
+                    <p>Untuk Mendapat Rekomendasi Sesuai Minat dan Preferensi Anda.</p>
+                    <p>Silahkan login terlebih dahulu</p>
+                  </div>
+
+                  <div className="navigation-buttons">
+                    <button
+                      className="start-button"
+                      onClick={() => {
+                        window.location.href = "/auth";
+                      }}>
+                      Login
+                    </button>
+                  </div>
+                </>
+              )
             ) : (
               <>
                 <div className="speech-bubble">
@@ -270,7 +368,7 @@ const DestinationRecomendationPages = () => {
                     <button
                       onClick={() =>
                         Object.values(answer).every((value) => value !== null)
-                          ? console.log(answer)
+                          ? handleKirimJawaban()
                           : Swal.fire({
                               icon: "error",
                               title: "Oops...",

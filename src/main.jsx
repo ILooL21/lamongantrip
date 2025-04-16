@@ -31,7 +31,6 @@ window.pwaState = {
 };
 
 window.addEventListener("beforeinstallprompt", (e) => {
-  console.log("📦 beforeinstallprompt triggered globally");
   e.preventDefault();
   window.pwaState.deferredPrompt = e;
 

@@ -19,7 +19,6 @@ const InstallButton = () => {
     };
 
     const handleAppInstalled = () => {
-      console.log("✅ Installed!");
       setShowButton(false);
       localStorage.setItem("pwaInstalled", "true");
       window.pwaState.deferredPrompt = null;
@@ -37,8 +36,7 @@ const InstallButton = () => {
     const prompt = window.pwaState?.deferredPrompt;
     if (prompt) {
       prompt.prompt();
-      const { outcome } = await prompt.userChoice;
-      console.log(`🧠 Install outcome: ${outcome}`);
+      await prompt.userChoice;
     }
   };
 

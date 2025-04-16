@@ -45,6 +45,16 @@ export const contactApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
+    countMail: builder.query({
+      query: () => ({
+        url: CONTACT_URL + "/detail/count",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user}`,
+        },
+      }),
+    }),
     replyMail: builder.mutation({
       query: (data) => ({
         url: CONTACT_URL + "/" + data.id + "/reply",
@@ -59,4 +69,4 @@ export const contactApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateContactMutation, useGetAllMailQuery, useGetMailByIdQuery, useDeleteMailMutation, useReplyMailMutation } = contactApiSlice;
+export const { useCreateContactMutation, useGetAllMailQuery, useGetMailByIdQuery, useDeleteMailMutation, useReplyMailMutation, useCountMailQuery } = contactApiSlice;
