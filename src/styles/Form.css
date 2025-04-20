@@ -35,7 +35,8 @@
   margin: 15px 0 10px;
 }
 
-.container button {
+.submit-button,
+.hidden {
   background-color: #87c0cd;
   color: #fff;
   font-size: 12px;
@@ -49,8 +50,58 @@
   cursor: pointer;
 }
 
-#register-button {
-  margin-top: 30px !important;
+.submit-button:hover {
+  background-color: #d4f0f7;
+  border-color: #d4f0f7;
+}
+
+.social-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  gap: 20px;
+}
+
+.social-login {
+  text-align: center;
+}
+
+.social-login p {
+  margin-bottom: 10px;
+}
+
+.social-button {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.social-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.social-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.social-button.google {
+  background-color: #db4437;
+  color: white;
+}
+
+.social-button.facebook {
+  background-color: #3b5998;
+  color: white;
 }
 
 .container button.hidden {

@@ -40,7 +40,14 @@
   color: #333;
 }
 
-.detail-tempat-wisata a {
+.detail-tempat-wisata #maps-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: transform 0.2s ease !important;
+}
+
+.detail-tempat-wisata .sosmed-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -50,6 +57,10 @@
   background: #f9f9f9;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease;
+}
+
+form .submit-button {
+  width: 100%;
 }
 
 .detail-tempat-wisata a:hover {

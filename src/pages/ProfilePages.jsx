@@ -24,6 +24,15 @@ const ProfilePages = () => {
 
   const updateProfile = async (e) => {
     e.preventDefault();
+    if (!username || !email) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Username dan Email tidak boleh kosong",
+      });
+      return;
+    }
+
     try {
       const res = await updateUserData({
         id: data.id_user,
@@ -90,11 +99,12 @@ const ProfilePages = () => {
             type="text"
             value={username}
             name="username"
+            placeholder="Masukkan Username"
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
             type="email"
-            placeholder={email}
+            placeholder="Masukkan Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             name="email"

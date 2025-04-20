@@ -23,6 +23,8 @@ import DestinationDetailPages from "./pages/DestinationDetail.jsx";
 import DestinationRecomendationPages from "./pages/DestinationRecomendation.jsx";
 import { registerSW } from "virtual:pwa-register";
 
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 registerSW();
 
 window.pwaState = {
@@ -131,7 +133,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+        <RouterProvider router={router} />
+      </GoogleOAuthProvider>
     </React.StrictMode>
   </Provider>
 );

@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { HomeOutlined, EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
-import { useLoginMutation, useRegisterMutation } from "../slices/userApiSlice";
+import { HomeOutlined, EyeOutlined, EyeInvisibleOutlined, FacebookFilled, GoogleSquareFilled } from "@ant-design/icons";
+import { useLoginMutation, useRegisterMutation, useGetUserGoogleDataMutation, useLoginSocialMutation } from "../slices/userApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import FormContainer from "../components/FormContainer";
 import Loading from "../components/Loading";
 import Swal from "sweetalert2";
 import "../styles/Form.css";
+import { useGoogleLogin } from "@react-oauth/google";
+import FacebookLogin from "react-facebook-login";
 
 const FormAuth = () => {
   // Login State
-  const [loginUsername, setLoginUsername] = useState("");
+  const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
   // Register State
@@ -29,6 +31,9 @@ const FormAuth = () => {
 
   const [login, { isLoading: isLoginLoading }] = useLoginMutation();
   const [register, { isLoading: isRegisterLoading }] = useRegisterMutation();
+
+  const [loginSocial, { isLoading: isLoginSocialLoading }] = useLoginSocialMutation();
+  const [getUserGoogleData, { isLoading: isGetUserGoogleDataLoading }] = useGetUserGoogleDataMutation();
 
   const { isLogin } = useSelector((state) => state.auth);
 
@@ -52,7 +57,7 @@ const FormAuth = () => {
 
   const loginHandler = async (e) => {
     e.preventDefault();
-    if (loginUsername === "" || loginPassword === "") {
+    if (loginEmail === "" || loginPassword === "") {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -61,7 +66,7 @@ const FormAuth = () => {
       return;
     }
     try {
-      const res = await login({ username: loginUsername, password: loginPassword }).unwrap();
+      const res = await login({ username: loginEmail, password: loginPassword }).unwrap();
       dispatch(setCredentials(res["access_token"]));
       Swal.fire({
         icon: "success",
@@ -71,7 +76,7 @@ const FormAuth = () => {
         window.location.reload();
       });
     } catch (err) {
-      setLoginUsername("");
+      setLoginEmail("");
       setLoginPassword("");
       Swal.fire({
         icon: "error",
@@ -79,6 +84,70 @@ const FormAuth = () => {
         text: err?.data?.detail || "Login gagal",
       });
     }
+  };
+
+  const generateRandomString = (length) => {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters[randomIndex];
+    }
+    return result;
+  };
+
+  const loginGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const res = await getUserGoogleData(tokenResponse).unwrap();
+        if (!isGetUserGoogleDataLoading) {
+          const loginRes = await loginSocial({
+            username: res.name,
+            email: res.email,
+            role: "user",
+            password: generateRandomString(16),
+          }).unwrap();
+          if (!isLoginSocialLoading) {
+            dispatch(setCredentials(loginRes["access_token"]));
+            Swal.fire({
+              icon: "success",
+              title: "Berhasil",
+              text: "Login berhasil",
+            }).then(() => {
+              window.location.reload();
+            });
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch user info:", err);
+      }
+    },
+    onError: () => console.log("Login Failed"),
+  });
+
+  const handleFacebookCallback = (response) => {
+    if (response?.status === "unknown") {
+      console.error("Sorry!", "Something went wrong with facebook Login.");
+      return;
+    }
+    const { name, email } = response;
+    const password = generateRandomString(16);
+
+    loginSocial({ username: name, email, role: "user", password })
+      .unwrap()
+      .then((res) => {
+        dispatch(setCredentials(res["access_token"]));
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil",
+          text: "Login berhasil",
+        }).then(() => {
+          window.location.reload();
+        });
+      })
+      .catch((err) => {
+        console.error("Failed to login with Facebook:", err);
+      });
   };
 
   useEffect(() => {
@@ -176,7 +245,7 @@ const FormAuth = () => {
               </small>
             )}
             <button
-              id="register-button"
+              className="submit-button"
               disabled={isRegisterLoading}
               type="submit">
               {isRegisterLoading ? <Loading /> : "Daftar"}
@@ -190,10 +259,10 @@ const FormAuth = () => {
             <div className="input-group">
               <input
                 type="text"
-                placeholder="Username"
-                name="username"
-                value={loginUsername}
-                onChange={(e) => setLoginUsername(e.target.value)}
+                placeholder="Email"
+                name="Email"
+                value={loginEmail}
+                onChange={(e) => setLoginEmail(e.target.value)}
               />
             </div>
             <div className="input-group">
@@ -212,10 +281,36 @@ const FormAuth = () => {
               </span>
             </div>
             <button
+              className="submit-button"
               disabled={isLoginLoading}
               type="submit">
               {isLoginLoading ? <Loading /> : "Masuk"}
             </button>
+            {/* tambahkan atau login menggunakan akun sosmed */}
+            <div className="social-login">
+              <p>Atau masuk dengan</p>
+              <div className="social-button-container">
+                <button
+                  type="button"
+                  className="social-button google"
+                  disabled={isRegisterLoading || isLoginLoading || isLoginSocialLoading || isGetUserGoogleDataLoading}
+                  onClick={() => {
+                    loginGoogle();
+                  }}>
+                  <GoogleSquareFilled style={{ fontSize: "20px" }} />
+                </button>
+                <FacebookLogin
+                  appId={import.meta.env.VITE_FACEBOOK_APP_ID}
+                  autoLoad={false}
+                  fields="name,email"
+                  callback={handleFacebookCallback}
+                  icon={<FacebookFilled style={{ fontSize: "20px" }} />}
+                  textButton=" "
+                  isDisabled={isRegisterLoading || isLoginLoading || isLoginSocialLoading || isGetUserGoogleDataLoading}
+                  cssClass="social-button facebook"
+                />
+              </div>
+            </div>
           </form>
         </div>
         <div className="toggle-container">

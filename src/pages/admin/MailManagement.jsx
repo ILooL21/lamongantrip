@@ -32,6 +32,15 @@ const MailManagementPages = () => {
           <td>{mail.subject}</td>
           <td>{mail.message}</td>
           <td>
+            {/* Tombol Balas ke email pengirim */}
+            <a
+              href={`mailto:${mail.email}?subject=${encodeURIComponent("Balasan dari Admin Lamongan Trip")}&body=${encodeURIComponent(`Mail Anda\n\n${mail.message}\n\n [Balasan]`)}`}
+              target="_blank"
+              rel="noopener noreferrer">
+              <button className="btn btn-primary">Balas</button>
+            </a>
+
+            {/* Tombol hapus */}
             <button
               className="btn btn-info"
               onClick={() => handleDeleteMail(mail.id)}>

@@ -8,15 +8,18 @@ import { FacebookFilled, InstagramOutlined, TikTokOutlined, XOutlined, YoutubeFi
 import "../styles/DestinationDetail.css";
 import { Breadcrumb, Table } from "antd";
 import InstallButton from "../components/InstallButton";
+import { APIProvider, Map, AdvancedMarker, Pin } from "@vis.gl/react-google-maps";
 
 const DestinationDetailPages = () => {
   const { nama } = useParams();
   const [data, setData] = useState(null);
   const [ticketArray, setTicketArray] = useState([]);
+  const [position, setPosition] = useState({
+    lat: "",
+    lng: "",
+  });
 
-  const [getDestinationData, { isLoading, error }] = useGetDestinationByNameMutation();
-
-  console.log(error);
+  const [getDestinationData, { isLoading }] = useGetDestinationByNameMutation();
 
   useEffect(() => {
     if (nama) {
@@ -27,6 +30,12 @@ const DestinationDetailPages = () => {
           // Parse sosmed & tiket
           const sosmed = JSON.parse(response.sosmed);
           const tiket = JSON.parse(response.tiket);
+
+          // Set position for map
+          setPosition({
+            lat: parseFloat(response.latitude),
+            lng: parseFloat(response.longitude),
+          });
 
           setData({
             ...response,
@@ -60,6 +69,34 @@ const DestinationDetailPages = () => {
       fetchData();
     }
   }, [nama, getDestinationData]);
+
+  const renderMap = () => {
+    if (!position.lat || !position.lng) return null;
+
+    return (
+      <div style={{ width: "100%", height: "400px", borderRadius: "10px", overflow: "hidden" }}>
+        <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+          <Map
+            defaultZoom={18}
+            defaultCenter={position}
+            mapId={import.meta.env.VITE_GOOGLE_MAPS_MAP_ID}
+            onClick={() => {
+              window.open(`https://www.google.com/maps/search/?api=1&query=${position.lat},${position.lng}`, "_blank");
+            }}
+          />
+          <AdvancedMarker
+            id="marker"
+            position={position}>
+            <Pin
+              background={"#FF0000"}
+              borderColor={"white"}
+              glyphColor={"white"}
+            />
+          </AdvancedMarker>
+        </APIProvider>
+      </div>
+    );
+  };
 
   const capitalizeEachFirstLetter = (val) => {
     return val.replace(/\b\w/g, (char) => char.toUpperCase());
@@ -101,6 +138,7 @@ const DestinationDetailPages = () => {
             }}>
             {data.deskripsi}
           </p>
+          <div className="map-container">{renderMap()}</div>
 
           <h3>Harga Tiket</h3>
           <Table
@@ -151,6 +189,7 @@ const DestinationDetailPages = () => {
                       key={platform}
                       href={link}
                       target="_blank"
+                      className="sosmed-link"
                       rel="noopener noreferrer">
                       {icons[platform]}
                     </a>

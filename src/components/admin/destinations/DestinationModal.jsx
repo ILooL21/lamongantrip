@@ -13,6 +13,8 @@ const DestinationModal = ({ isDetailModal, isEditModal, isAddModal, id_destinati
     deskripsi: "",
     nama_tempat: "",
     alamat: "",
+    latitude: "",
+    longitude: "",
     jenis: "",
     tiket: {
       hari_kerja: {
@@ -47,6 +49,8 @@ const DestinationModal = ({ isDetailModal, isEditModal, isAddModal, id_destinati
     data.append("nama_tempat", formData.nama_tempat);
     data.append("deskripsi", formData.deskripsi);
     data.append("alamat", formData.alamat);
+    data.append("latitude", formData.latitude);
+    data.append("longitude", formData.longitude);
     data.append("jenis", formData.jenis);
     data.append("tiket", JSON.stringify(formData.tiket));
     data.append("sosmed", JSON.stringify(formData.sosmed));
@@ -86,6 +90,8 @@ const DestinationModal = ({ isDetailModal, isEditModal, isAddModal, id_destinati
                 deskripsi: res.deskripsi || "",
                 nama_tempat: res.nama_tempat || "",
                 alamat: res.alamat || "",
+                latitude: res.latitude || "",
+                longitude: res.longitude || "",
                 jenis: res.jenis || "",
                 tiket: res.tiket
                   ? ticket_list
@@ -181,6 +187,13 @@ const DestinationModal = ({ isDetailModal, isEditModal, isAddModal, id_destinati
           ...prev.sosmed,
           [platform]: value,
         },
+      }));
+    } else if (name === "location") {
+      const [latitude, longitude] = value.split(",");
+      setFormData((prev) => ({
+        ...prev,
+        latitude: latitude.trim(),
+        longitude: longitude.trim(),
       }));
     } else if (name.startsWith("tiket-")) {
       // hilangkan selain angka
@@ -409,6 +422,38 @@ const DestinationModal = ({ isDetailModal, isEditModal, isAddModal, id_destinati
                 readOnly={isDetailModal}
               />
             </div>
+            {/* latitude longitude */}
+            <div className="form-group">
+              <label>Koordinat Lokasi (Latitude, Longitude)</label>
+              {isDetailModal ? (
+                <p>
+                  {formData.latitude}, {formData.longitude}
+                </p>
+              ) : (
+                <>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="location"
+                    value={`${formData.latitude}, ${formData.longitude}`}
+                    onChange={handleChange}
+                    placeholder="Masukkan Koordinat Lokasi (Latitude, Longitude)"
+                  />
+                  {/* pesan kecil cari tempat di google maps dan salin koordinatnya */}
+                  <small style={{ color: "gray" }}>
+                    Cari tempat di{" "}
+                    <a
+                      href="https://www.google.com/maps"
+                      target="_blank"
+                      rel="noopener noreferrer">
+                      Google Maps
+                    </a>{" "}
+                    dan salin koordinatnya
+                  </small>
+                </>
+              )}
+            </div>
+
             <div className="form-group">
               <label>Tiket</label>
               {isDetailModal ? (
