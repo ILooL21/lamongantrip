@@ -6,6 +6,7 @@ import { Radio, Checkbox, Col, Row } from "antd";
 import Swal from "sweetalert2";
 import InstallButton from "../components/InstallButton";
 import { useGetRecommendationsMutation, useGetUserRecommendationsLogMutation } from "../slices/recommendationApiSlice";
+import Footer from "../components/Footer";
 
 const questions = [
   {
@@ -224,7 +225,7 @@ const DestinationRecomendationPages = () => {
   };
 
   const formattingNameLinkDestinations = (val) => {
-    return val.replace(/\s+/g, "-").toLowerCase();
+    return val.replace(/-/g, "_").toLowerCase().replace(/\s+/g, "-");
   };
 
   const currentQuestion = questions[currentQuestionIndex];
@@ -242,20 +243,19 @@ const DestinationRecomendationPages = () => {
           />
 
           <div className="question-container">
-            {/* 👋 Halaman sambutan */}
-            {!isStarted ? (
-              isLogin ? (
-                <>
-                  {isLoading && listRecomendation.length === 0 ? (
-                    <div className="speech-bubble">
-                      <h1>Loading...</h1>
-                      <p>Mohon tunggu sebentar.</p>
-                    </div>
-                  ) : listRecomendation.length > 0 ? (
-                    <>
-                      <div className="speech-bubble">
-                        <h2>Selamat datang kembali!</h2>
-                        <p>Kamu sudah mendapatkan rekomendasi sebelumnya.</p>
+            <div className="speech-bubble">
+              {/* 👋 Halaman sambutan */}
+              {!isStarted ? (
+                isLogin ? (
+                  <>
+                    {isLoading && listRecomendation.length === 0 ? (
+                      <>
+                        <h1>Loading...</h1>
+                        <p>Mohon tunggu sebentar.</p>
+                      </>
+                    ) : listRecomendation.length > 0 ? (
+                      <>
+                        <p>Berikut adalah rekomendasi wisata sesuai Preferensi anda:</p>
 
                         <ul className="mt-4 space-y-3">
                           {listRecomendation.map((item) => (
@@ -272,120 +272,119 @@ const DestinationRecomendationPages = () => {
 
                         <p className="mt-6">Klik Tempat Wisata untuk melihat detailnya.</p>
                         <p>Silahkan klik tombol di bawah untuk mendapat rekomendasi yang lain.</p>
+                      </>
+                    ) : (
+                      <>
+                        <h1>Selamat datang!</h1>
+                        <p>Saya di sini untuk memberi kamu rekomendasi tempat wisata di Lamongan.</p>
+                        <p>Bisakah kamu menjawab beberapa pertanyaan saya?</p>
+                      </>
+                    )}
+                    <div className="navigation-buttons">
+                      <button
+                        className="start-button"
+                        onClick={() => {
+                          setIsStarted(true);
+                        }}>
+                        {listRecomendation.length > 0 ? "Cari Rekomendasi Lagi" : "Cari Rekomendasi"}
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <>
+                      <h1>Kamu Belum Login!</h1>
+                      <p>Untuk Mendapat Rekomendasi Sesuai Minat dan Preferensi Anda.</p>
+                      <p>Silahkan login terlebih dahulu</p>
+
+                      <div className="navigation-buttons">
+                        <button
+                          className="start-button"
+                          onClick={() => {
+                            window.location.href = "/auth";
+                          }}>
+                          Login
+                        </button>
                       </div>
                     </>
-                  ) : (
-                    <div className="speech-bubble">
-                      <h1>Selamat datang!</h1>
-                      <p>Saya di sini untuk memberi kamu rekomendasi tempat wisata di Lamongan.</p>
-                      <p>Bisakah kamu menjawab beberapa pertanyaan saya?</p>
-                    </div>
-                  )}
-                  <div className="navigation-buttons">
-                    <button
-                      className="start-button"
-                      onClick={() => {
-                        setIsStarted(true);
-                      }}>
-                      {listRecomendation.length > 0 ? "Cari Rekomendasi Lagi" : "Cari Rekomendasi"}
-                    </button>
-                  </div>
-                </>
+                  </>
+                )
               ) : (
                 <>
-                  <div className="speech-bubble">
-                    <h1>Kamu Belum Login!</h1>
-                    <p>Untuk Mendapat Rekomendasi Sesuai Minat dan Preferensi Anda.</p>
-                    <p>Silahkan login terlebih dahulu</p>
+                  <p>{currentQuestion.Q}</p>
+
+                  <div className="answer-buttons">
+                    {currentQuestion.type_question === "one" && (
+                      <Radio.Group
+                        onChange={(e) => handleAnswer(e.target.value)}
+                        value={answer[currentQuestion.title.toLowerCase().replace(/[\s-]/g, "_")] === null ? undefined : answer[currentQuestion.title.toLowerCase().replace(/[\s-]/g, "_")] === 1 ? "Ya" : "Tidak"}>
+                        {currentQuestion.A.map((option) => (
+                          <Radio
+                            key={option}
+                            value={option}>
+                            {option}
+                          </Radio>
+                        ))}
+                      </Radio.Group>
+                    )}
+
+                    {currentQuestion.type_question === "multiple" && (
+                      <Checkbox.Group
+                        onChange={(checkedValues) => {
+                          const updatedAnswers = { ...answer };
+                          currentQuestion.A.forEach((activity) => {
+                            const key = activity.toLowerCase().replace(/[\s-]/g, "_");
+                            updatedAnswers[key] = checkedValues.includes(activity) ? 1 : 0;
+                          });
+                          setAnswer(updatedAnswers);
+                        }}
+                        value={currentQuestion.A.filter((activity) => answer[activity.toLowerCase().replace(/[\s-]/g, "_")])}>
+                        <Row gutter={[16, 8]}>
+                          {currentQuestion.A.map((option) => (
+                            <Col
+                              span={12}
+                              key={option}>
+                              <Checkbox value={option}>{option}</Checkbox>
+                            </Col>
+                          ))}
+                        </Row>
+                      </Checkbox.Group>
+                    )}
                   </div>
 
                   <div className="navigation-buttons">
                     <button
-                      className="start-button"
-                      onClick={() => {
-                        window.location.href = "/auth";
-                      }}>
-                      Login
+                      onClick={handleBack}
+                      disabled={currentQuestionIndex === 0}>
+                      Sebelumnya
                     </button>
+
+                    {currentQuestionIndex < questions.length - 1 ? (
+                      <button onClick={() => setCurrentQuestionIndex((prev) => prev + 1)}>Selanjutnya</button>
+                    ) : (
+                      <button
+                        onClick={() =>
+                          Object.values(answer).every((value) => value !== null)
+                            ? handleKirimJawaban()
+                            : Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Silahkan jawab semua pertanyaan",
+                              }).then(() => {
+                                setCurrentQuestionIndex(0);
+                              })
+                        }>
+                        Kirim Jawaban
+                      </button>
+                    )}
                   </div>
                 </>
-              )
-            ) : (
-              <>
-                <div className="speech-bubble">
-                  <p>{currentQuestion.Q}</p>
-                </div>
-
-                <div className="answer-buttons">
-                  {currentQuestion.type_question === "one" && (
-                    <Radio.Group
-                      onChange={(e) => handleAnswer(e.target.value)}
-                      value={answer[currentQuestion.title.toLowerCase().replace(/[\s-]/g, "_")] === null ? undefined : answer[currentQuestion.title.toLowerCase().replace(/[\s-]/g, "_")] === 1 ? "Ya" : "Tidak"}>
-                      {currentQuestion.A.map((option) => (
-                        <Radio
-                          key={option}
-                          value={option}>
-                          {option}
-                        </Radio>
-                      ))}
-                    </Radio.Group>
-                  )}
-
-                  {currentQuestion.type_question === "multiple" && (
-                    <Checkbox.Group
-                      onChange={(checkedValues) => {
-                        const updatedAnswers = { ...answer };
-                        currentQuestion.A.forEach((activity) => {
-                          const key = activity.toLowerCase().replace(/[\s-]/g, "_");
-                          updatedAnswers[key] = checkedValues.includes(activity) ? 1 : 0;
-                        });
-                        setAnswer(updatedAnswers);
-                      }}
-                      value={currentQuestion.A.filter((activity) => answer[activity.toLowerCase().replace(/[\s-]/g, "_")])}>
-                      <Row gutter={[16, 8]}>
-                        {currentQuestion.A.map((option) => (
-                          <Col
-                            span={12}
-                            key={option}>
-                            <Checkbox value={option}>{option}</Checkbox>
-                          </Col>
-                        ))}
-                      </Row>
-                    </Checkbox.Group>
-                  )}
-                </div>
-
-                <div className="navigation-buttons">
-                  <button
-                    onClick={handleBack}
-                    disabled={currentQuestionIndex === 0}>
-                    Sebelumnya
-                  </button>
-
-                  {currentQuestionIndex < questions.length - 1 ? (
-                    <button onClick={() => setCurrentQuestionIndex((prev) => prev + 1)}>Selanjutnya</button>
-                  ) : (
-                    <button
-                      onClick={() =>
-                        Object.values(answer).every((value) => value !== null)
-                          ? handleKirimJawaban()
-                          : Swal.fire({
-                              icon: "error",
-                              title: "Oops...",
-                              text: "Silahkan jawab semua pertanyaan",
-                            }).then(() => {
-                              setCurrentQuestionIndex(0);
-                            })
-                      }>
-                      Kirim Jawaban
-                    </button>
-                  )}
-                </div>
-              </>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

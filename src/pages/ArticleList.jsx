@@ -8,6 +8,7 @@ import "../styles/ArticleList.css";
 import img from "../assets/no-result-data.webp";
 import Swal from "sweetalert2";
 import InstallButton from "../components/InstallButton";
+import Footer from "../components/Footer";
 
 const ArticleListPages = () => {
   const [searchCategory, setSearchCategory] = useState("judul");
@@ -181,11 +182,16 @@ const ArticleListPages = () => {
                   </Tag>
                 ))}
               />
-              {item.content.length > 400 ? item.content.slice(0, 400) + "..." : item.content}
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: item.content.length > 150 ? item.content.slice(0, 150) + "..." : item.content,
+                }}
+              />
             </List.Item>
           )}
         />
       </div>
+      <Footer />
     </div>
   );
 };

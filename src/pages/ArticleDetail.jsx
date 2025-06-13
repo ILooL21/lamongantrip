@@ -5,6 +5,7 @@ import Loading from "../components/Loading";
 import { useEffect, useState } from "react";
 import "../styles/ArticleDetail.css"; // Tambahkan CSS ini
 import InstallButton from "../components/InstallButton";
+import Footer from "../components/Footer";
 
 const ArticleDetailPages = () => {
   const { id } = useParams();
@@ -94,7 +95,7 @@ const ArticleDetailPages = () => {
           />
         )}
 
-        <div className="article-body">{data.isi}</div>
+        <div dangerouslySetInnerHTML={{ __html: data.isi }} />
 
         {data.tags.length > 0 && (
           <div className="article-tags">
@@ -111,6 +112,7 @@ const ArticleDetailPages = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

@@ -1,14 +1,14 @@
 import Header from "../components/Header";
 import "../styles/HomePages.css";
 import { Link } from "react-router-dom";
-import { FacebookFilled, InstagramOutlined, LinkedinFilled, YoutubeFilled } from "@ant-design/icons";
 import { useGetLatestArticleQuery } from "../slices/articleApiSlice";
-import img from "../assets/tugu.jpeg";
-import pasfoto from "../assets/pasfoto.jpg";
+import InstallButton from "../components/InstallButton";
+import Footer from "../components/Footer";
+import img from "../assets/tugu.jpg";
 import alami from "../assets/alam.jpeg";
 import religi from "../assets/religi.webp";
 import buatan from "../assets/buatan.webp";
-import InstallButton from "../components/InstallButton";
+import alun from "../assets/alun.jpg";
 
 const HomePages = () => {
   const { data, error, isLoading } = useGetLatestArticleQuery();
@@ -16,117 +16,169 @@ const HomePages = () => {
   return (
     <div>
       <Header />
-
       {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-text">
-          <h2>Ayo Jelajahi Keindahan Lamongan!</h2>
-          <p>Liburan di Lamongan? Kenapa nggak! Mulai dari wisata alam yang menyegarkan hingga spot unik yang Instagramable, semua ada di sini. Yuk, rencanakan petualanganmu dan temukan tempat-tempat seru di Lamongan!</p>
-
+      <section
+        className="hero-section hero-bg"
+        style={{
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 0,
+          backgroundImage: `url(${img})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}>
+        <div
+          className="hero-overlay"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.45)",
+            zIndex: 1,
+          }}
+        />
+        <div
+          className="hero-text"
+          style={{
+            position: "relative",
+            zIndex: 2,
+            color: "#fff",
+            textAlign: "center",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}>
+          <h2 style={{ fontSize: 36, fontWeight: 700, marginBottom: 16 }}>Ayo Jelajahi Keindahan Lamongan!</h2>
+          <p style={{ fontSize: 18, maxWidth: 600, margin: "0 auto 24px" }}>
+            Liburan di Lamongan? Kenapa nggak! Mulai dari wisata alam yang menyegarkan hingga spot unik yang Instagramable, semua ada di sini. Yuk, rencanakan petualanganmu dan temukan tempat-tempat seru di Lamongan!
+          </p>
           <a
             href="/rekomendasi-wisata"
-            className="btn-selengkapnya">
+            className="btn-selengkapnya"
+            style={{ fontSize: 18, padding: "12px 32px", borderRadius: 8 }}>
             Dapatkan Rekomendasi
           </a>
         </div>
-
-        <div className="hero-image">
+      </section>
+      <InstallButton />
+      {/* Tentang Website */}
+      <section className="tentang-section about-split">
+        <div className="about-img-container">
           <img
-            src={img}
-            alt="Destination"
+            src={alun}
+            alt="Tentang Lamongan"
+            className="about-img"
           />
         </div>
+        <div className="about-content">
+          <div className="about-greeting">Hallo, Rek!</div>
+          <h2>
+            <span className="about-highlight">Lamongan Trip hadir</span> untuk mengajak kita semua mendukung pariwisata lokal, sambil bersama-sama melindungi warisan budaya dan kekayaan alam yang kita miliki.
+          </h2>
+          <p>
+            Ini bukan sekadar website biasa. Kami menggunakan teknologi <strong>machine learning</strong> untuk memberikan rekomendasi wisata yang paling cocok untuk Anda. Cukup beritahu kami apa yang Anda cari (ingin santai, seru-seruan,
+            atau tantangan?) dan kami akan cocokkan dengan keistimewaan setiap tempat (apakah pemandangannya, wahananya, atau ceritanya).
+            <br />
+            <br />
+            Mari jelajahi dan banggakan Lamongan bersama Lamongan Trip!
+          </p>
+        </div>
       </section>
-
-      <InstallButton />
-
-      {/* Tentang Website */}
-      <section className="tentang-section">
-        <h2>Tentang Website Ini</h2>
-        <p>
-          Website ini merupakan platform rekomendasi destinasi wisata di Lamongan yang menggunakan teknologi <strong>machine learning</strong>. Rekomendasi diberikan berdasarkan dua hal utama:{" "}
-          <strong>alasan seseorang ingin berwisata</strong> (seperti ingin relaksasi, mencari hiburan, atau petualangan), dan <strong>daya tarik dari tempat wisatanya sendiri</strong> (seperti pemandangan alam, wahana unik, atau nilai
-          sejarah). Selain itu, website ini juga menyajikan informasi lengkap mengenai tempat wisata, harga tiket, lokasi, dan artikel menarik seputar wisata di Lamongan.
-        </p>
-      </section>
-
       {/* Kategori */}
       <section className="kategori-section">
-        <div
-          className="kategori-content"
-          style={{ display: "flex", gap: "2rem", alignItems: "center", flexWrap: "wrap" }}>
-          {/* Keterangan di sebelah kiri */}
+        <div className="tempat-menarik-header">
+          <h2>Ragam Pesona Lamongan</h2>
+          <p className="tempat-menarik-subtitle">Dari ketenangan wisata religi hingga serunya petualangan bahari, temukan kategori wisata di Lamongan yang paling sesuai untuk Anda. Rencanakan perjalanan tak terlupakan di Kota Soto!</p>
+        </div>{" "}
+        <div className="tempat-menarik-grid">
+          {/* Card kecil */}
           <div
-            className="kategori-description"
-            style={{ flex: "1 1 300px" }}>
-            <h2>Ada Apa di Lamongan?</h2>
-            <p>
-              Sedang cari inspirasi liburan? Temukan keindahan wisata alam, ketenangan destinasi religi, keseruan wahana buatan, kekayaan budaya, hingga cita rasa kuliner khas Lamongan. Yuk, cari tahu tempat wisata menarik di Lamongan dan
-              rencanakan liburan serumu sekarang!
-            </p>
-          </div>
-
-          {/* Kategori dan link */}
-          <div
-            className="kategori-right"
-            style={{ flex: "2 1 500px" }}>
-            <div
-              className="kategori-header"
-              style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <h2>Kategori Wisata</h2>
-              <a
-                href="/destination"
-                className="lihat-semua-link">
-                Lihat Semua
-              </a>
+            className="place-card"
+            onClick={() => (window.location.href = `/destination/alam`)}>
+            <img
+              src={alami}
+              alt="Wisata Bahari Lamongan"
+              className="place-image"
+            />
+            <div className="place-info">
+              <h3>Wisata Bahari Lamongan</h3>
             </div>
-
-            <div
-              className="kategori-wrapper"
-              style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-              {["Alam", "Religi", "Buatan"].map((kategori) => (
-                <div
-                  className="kategori-card"
-                  key={kategori}
-                  onClick={() => (window.location.href = `/destination/${kategori.toLowerCase()}`)}>
-                  <img
-                    src={kategori === "Alam" ? alami : kategori === "Religi" ? religi : buatan}
-                    alt={`Wisata ${kategori}`}
-                    className="kategori-image"
-                  />
-                  <p className="kategori-label">Wisata {kategori}</p>
-                </div>
-              ))}
+          </div>
+          <div
+            className="place-card"
+            onClick={() => (window.location.href = `/destination/religi`)}>
+            <img
+              src={religi}
+              alt="Masjid Agung Lamongan"
+              className="place-image"
+            />
+            <div className="place-info">
+              <h3>Masjid Agung Lamongan</h3>
+            </div>
+          </div>{" "}
+          <div
+            className="place-card"
+            onClick={() => (window.location.href = `/destination/buatan`)}>
+            <img
+              src={buatan}
+              alt="Goa Maharani"
+              className="place-image"
+            />
+            <div className="place-info">
+              <h3>Goa Maharani</h3>
             </div>
           </div>
         </div>
-      </section>
-
+        <div className="see-all-link-container">
+          <a
+            href="/destination"
+            className="see-all-link">
+            Lihat Semua Destinasi
+          </a>
+        </div>
+      </section>{" "}
       {/* Artikel Terbaru */}
       <section className="artikel-section">
-        <div className="artikel-header">
-          <h2>Artikel Terbaru</h2>
-          <Link
-            to="/artikel"
-            className="lihat-semua-link">
-            Lihat Semua
-          </Link>
+        <div className="artikel-header-container">
+          <div className="artikel-header-text">
+            <h5>Artikel</h5>
+            <h2>Lihat apa yang sedang terjadi di Lamongan saat ini.</h2>
+            <p>Lamongan, kota wisata dengan beragam pesona, menawarkan keragaman pengalaman yang tidak akan pernah Anda lupakan. Apa saja berita dan informasi terbaru tentang Lamongan?</p>
+            <Link
+              to="/articles"
+              className="artikel-view-all-btn">
+              Lihat semua Berita & Pembaruan
+            </Link>
+          </div>
         </div>
 
-        <div className="artikel-grid">
-          {!isLoading && !error && data.length > 0 ? (
-            data.map((item) => (
+        <div className="artikel-cards-container">
+          {!isLoading && !error && data && data.length > 0 ? (
+            data.slice(0, 2).map((item) => (
               <div
-                className="artikel-card"
+                className="artikel-card-large"
                 key={item.id_artikel}
                 onClick={() => (window.location.href = `/article/${item.id_artikel}`)}>
-                <img
-                  src={import.meta.env.VITE_API_URL + item.gambar}
-                  alt={`Artikel ${item.judul}`}
-                  className="artikel-image"
-                />
-                <h3>{item.judul}</h3>
-                <p>{item.isi.slice(0, 100)}...</p>
+                <div
+                  className="artikel-card-image"
+                  style={{ backgroundImage: `url(${import.meta.env.VITE_API_URL + item.gambar})` }}>
+                  <div className="artikel-date">{new Date(item.created_at).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "2-digit" }).replace(" ", " ")}</div>
+                </div>
+                <div className="artikel-card-content">
+                  <h3>{item.judul}</h3>
+                  <div
+                    className="artikel-excerpt"
+                    dangerouslySetInnerHTML={{
+                      __html: item.isi.length > 120 ? item.isi.replace(/<\/?[^>]+(>|$)/g, "").slice(0, 120) + "..." : item.isi.replace(/<\/?[^>]+(>|$)/g, ""),
+                    }}
+                  />
+                </div>
               </div>
             ))
           ) : (
@@ -134,75 +186,8 @@ const HomePages = () => {
           )}
         </div>
       </section>
-
-      {/* Greet the Developer */}
-      <section className="greet-section">
-        <h2>Greet the Developer</h2>
-        <div className="developer-card">
-          <img
-            src={pasfoto}
-            alt="Muhamad Kholilur Rohman"
-            className="developer-photo"
-          />
-          <div className="developer-info">
-            <h3>Muhamad Kholilur Rohman</h3>
-            <p>
-              Saya memiliki minat di bidang backend development dan analisis data. Saat ini saya sedang aktif mengembangkan keterampilan di kedua bidang tersebut, sambil terus belajar dan memahami berbagai aspek teknis yang mendukungnya.
-              Saya berkomitmen untuk terus berkembang dan siap berkontribusi di dunia teknologi.
-            </p>
-            <div
-              className="social-links"
-              style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
-              <a
-                href="https://www.linkedin.com/in/muhamad-kholilur-rohman-3450371a2/"
-                target="_blank"
-                rel="noopener noreferrer">
-                <LinkedinFilled style={{ fontSize: 20, color: "#0077B5" }} />
-              </a>
-              <a
-                href="https://www.instagram.com/mkrilul/"
-                target="_blank"
-                rel="noopener noreferrer">
-                <InstagramOutlined style={{ fontSize: 20, color: "#C13584" }} />
-              </a>
-              <a
-                href="https://www.facebook.com/profile.php?id=100009379517600"
-                target="_blank"
-                rel="noopener noreferrer">
-                <FacebookFilled style={{ fontSize: 20, color: "#4267B2" }} />
-              </a>
-              <a
-                href="https://www.youtube.com/channel/UC0mAYqa9s9gDGoJ-y0dF2LA/videos"
-                target="_blank"
-                rel="noopener noreferrer">
-                <YoutubeFilled style={{ fontSize: 20, color: "#FF0000" }} />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* thank you from developer */}
-      {/* <section className="thank-you-section">
-        <h2>Terima Kasih!</h2>
-        <p>Terima kasih telah mengunjungi website ini. Semoga informasi yang tersedia dapat membantu kamu dalam merencanakan perjalanan wisata ke Lamongan dengan lebih mudah dan menyenangkan.</p>
-        <p>Jika ada pertanyaan, saran, atau ingin sekadar berdiskusi, jangan ragu untuk menghubungi saya melalui media sosial yang tersedia.</p>
-        <p>Selamat menjelajahi Lamongan, dan semoga liburanmu berkesan!</p>
-      </section> */}
-
       {/* Footer */}
-      <footer className="footer">
-        <p>
-          &copy; 2025 Website Rekomendasi Wisata Lamongan. Dibuat oleh{" "}
-          <a
-            href="https://www.linkedin.com/in/muhamad-kholilur-rohman-3450371a2/"
-            target="_blank"
-            rel="noopener noreferrer">
-            Muhamad Kholilur Rohman
-          </a>
-          .
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 };

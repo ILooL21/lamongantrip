@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useDeleteMailMutation, useGetAllMailQuery } from "../../slices/contactApiSlice";
 import "../../styles/MailManagement.css";
 import Search from "antd/es/input/Search";
+import { CheckOutlined, EyeFilled, LockOutlined, SendOutlined } from "@ant-design/icons";
 
 const MailManagementPages = () => {
   const [listMails, setListMails] = useState([]);
@@ -31,21 +32,36 @@ const MailManagementPages = () => {
           <td>{mail.email}</td>
           <td>{mail.subject}</td>
           <td>{mail.message}</td>
+          <td>{mail.status}</td>
           <td>
-            {/* Tombol Balas ke email pengirim */}
-            <a
-              href={`mailto:${mail.email}?subject=${encodeURIComponent("Balasan dari Admin Lamongan Trip")}&body=${encodeURIComponent(`Mail Anda\n\n${mail.message}\n\n [Balasan]`)}`}
-              target="_blank"
-              rel="noopener noreferrer">
-              <button className="btn btn-primary">Balas</button>
-            </a>
-
-            {/* Tombol hapus */}
             <button
-              className="btn btn-info"
-              onClick={() => handleDeleteMail(mail.id)}>
-              Selesai
+              className="btn btn-info me-1"
+              title="Lihat Detail Mail">
+              <EyeFilled style={{ color: "white" }} />
             </button>
+
+            {mail.status !== "Selesai" && (
+              <>
+                <a
+                  href={`mailto:${mail.email}?subject=${encodeURIComponent("Balasan dari Admin Lamongan Trip")}&body=${encodeURIComponent(`Mail Anda\n\n${mail.message}\n\n[Balasan]`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="me-1">
+                  <button
+                    className="btn btn-primary"
+                    title="Balas Mail">
+                    <SendOutlined />
+                  </button>
+                </a>
+
+                <button
+                  className="btn btn-warning"
+                  onClick={() => handleDeleteMail(mail.id)}
+                  title="Tandai Selesai">
+                  <CheckOutlined />
+                </button>
+              </>
+            )}
           </td>
         </tr>
       ));
@@ -56,7 +72,7 @@ const MailManagementPages = () => {
 
     Swal.fire({
       title: "Apakah Mail Sudah Dibalas?",
-      text: "Mail yang dihapus tidak dapat dikembalikan!",
+      text: "Mail yang diselesaikan tidak bisa dikembalikan!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -105,6 +121,7 @@ const MailManagementPages = () => {
                   <option value="email">Email</option>
                   <option value="subject">Subject</option>
                   <option value="message">Message</option>
+                  <option value="status">Status</option>
                 </select>
                 <Search
                   placeholder="Cari Mail"
@@ -122,6 +139,7 @@ const MailManagementPages = () => {
                     <th>Email</th>
                     <th>Subject</th>
                     <th>Message</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
@@ -132,6 +150,7 @@ const MailManagementPages = () => {
                         colSpan="5"
                         style={{ textAlign: "center" }}>
                         Loading...
+                        
                       </td>
                     </tr>
                   ) : renderRowTable().length > 0 ? (

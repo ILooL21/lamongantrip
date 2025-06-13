@@ -6,6 +6,7 @@ import { useCreateContactMutation } from "../slices/contactApiSlice";
 import "../styles/Contact.css";
 import Swal from "sweetalert2";
 import InstallButton from "../components/InstallButton";
+import Footer from "../components/Footer";
 
 const ContactPages = () => {
   const [email, setEmail] = useState("");
@@ -149,6 +150,7 @@ const ContactPages = () => {
           </form>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

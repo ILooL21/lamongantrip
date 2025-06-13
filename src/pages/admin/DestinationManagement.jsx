@@ -88,7 +88,19 @@ const DestinationManagementPages = () => {
           </td>
           <td>{destination.nama_tempat}</td>
           <td>{destination.jenis}</td>
-          <td>{destination.deskripsi}</td>
+          <td>
+            <div
+              dangerouslySetInnerHTML={{ __html: destination.deskripsi }}
+              style={{
+                maxHeight: "100px",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: "vertical",
+              }}
+            />
+          </td>
           <td>{destination.alamat}</td>
           <td>
             <button

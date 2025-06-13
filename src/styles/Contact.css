@@ -111,3 +111,15 @@
 .button-contact-save:hover:not(:disabled) {
   background: #005f56;
 }
+
+/* ketika 768px maka form dan menu contact atas bawah */
+@media (max-width: 768px) {
+  .container-menu-form-contact {
+    flex-direction: column;
+  }
+
+  .menu-contact,
+  .container-form-contact {
+    width: 100%;
+  }
+}

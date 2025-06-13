@@ -139,7 +139,7 @@ const UserModal = ({ isDetailModal, isEditModal, isAddModal, id_user, onClose })
               type="primary"
               onClick={createUserHandler}
               loading={loadingCreateUser}>
-              {loadingCreateUser ? "Simpan" : "Loading..."}
+              Simpan
             </Button>
           ) : isEditModal ? (
             <Button
@@ -147,7 +147,7 @@ const UserModal = ({ isDetailModal, isEditModal, isAddModal, id_user, onClose })
               type="primary"
               onClick={updateUserHandler}
               loading={loadingUpdateUser}>
-              {loadingUpdateUser ? "Simpan" : "Loading..."}
+              Tambah
             </Button>
           ) : null,
           <Button

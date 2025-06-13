@@ -4,6 +4,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .header-container {
@@ -22,7 +23,7 @@
 
 .logo-image {
   height: auto;
-  width: 120px;
+  width: 80px;
 }
 
 .menu-toggle {
@@ -79,10 +80,17 @@
   display: none;
   flex-direction: column;
   padding: 0.5rem;
+  /* Add a transition for a smoother appearance */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10;
 }
 
 .dropdown-menu.active {
   display: flex;
+  opacity: 1;
+  visibility: visible;
 }
 
 .dropdown-item {
@@ -116,6 +124,36 @@
   color: white;
 }
 
+button.dropdown-item {
+  /* Hapus background dan border default dari button */
+  background: none;
+  border: none;
+
+  /* Pastikan lebar dan paddingnya sama dengan link */
+  width: 100%;
+  padding: 0.5rem 1rem;
+
+  /* Ambil style font dan color dari parent agar konsisten */
+  font-family: inherit;
+  font-size: inherit;
+  color: #333; /* Samakan dengan warna .dropdown-item */
+
+  /* Pastikan cursor tetap pointer saat di-hover */
+  cursor: pointer;
+
+  /* --- FIX UNTUK RATA KIRI --- */
+  /* Pastikan teks selalu rata kiri */
+  text-align: left;
+  /* Jika button menggunakan flex, paksa konten ke kiri */
+  justify-content: flex-start;
+}
+
+/* Pastikan state hover juga sama */
+button.dropdown-item:hover {
+  background-color: #f5f5f5;
+  color: #87c0cd;
+}
+
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
@@ -124,13 +162,15 @@
   .nav-menu {
     display: none;
     position: fixed;
-    top: 80px;
+    /* Adjust top position to match header height */
+    top: 120px; /* Or whatever the exact height of your header is */
     left: 0;
     right: 0;
     background: white;
     flex-direction: column;
     padding: 1rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid #f5f5f5; /* Add a separator */
   }
 
   .nav-menu.active {
@@ -143,21 +183,33 @@
 
   .dropdown-toggle {
     width: 100%;
-    justify-content: center;
+    justify-content: center; /* Better alignment for the arrow */
+    padding: 0.75rem 1rem;
   }
 
   .dropdown-menu {
     position: static;
+    /* --- FIX STARTS HERE --- */
+    transform: none; /* Reset the transform */
+    left: auto; /* Reset the left property */
+    /* --- FIX ENDS HERE --- */
+
     box-shadow: none;
     width: 100%;
+    /* Add some visual nesting */
+    background-color: #f9f9f9;
+    border-radius: 0;
+    padding-left: 2rem; /* Indent the items */
   }
 
   .dropdown-item {
-    text-align: center;
+    text-align: left; /* Align text to the left for better readability */
+    padding: 0.75rem 1rem;
   }
 
   .auth-link {
     width: 100%;
     text-align: center;
+    padding: 0.75rem 1rem; /* Consistent padding */
   }
 }

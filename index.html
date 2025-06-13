@@ -15,7 +15,7 @@
   <script type="module">
     async function requestNotificationPermission() {
       if ('serviceWorker' in navigator && 'Notification' in window) {
-        navigator.serviceWorker.register('/public/sw.js')
+        navigator.serviceWorker.register('/sw.js')
           .then(registration => {
             return Notification.requestPermission();
           })

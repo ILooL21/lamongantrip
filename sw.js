@@ -1,6 +1,5 @@
 const CACHE_NAME = "lamongan-trip-cache-v1";
 
-// Inisialisasi WebSocket (akan dihubungkan nanti)
 let socket;
 
 self.addEventListener("install", () => {
@@ -24,7 +23,7 @@ self.addEventListener("push", (event) => {
 });
 
 function connectWebSocket() {
-  socket = new WebSocket("ws://localhost:3000"); // Ganti dengan URL server WebSocket Anda
+  socket = new WebSocket("ws://localhost:3000");
 
   socket.onopen = () => {
     console.log("WebSocket connected");

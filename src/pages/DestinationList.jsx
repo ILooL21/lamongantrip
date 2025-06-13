@@ -9,6 +9,7 @@ import Loading from "../components/Loading";
 import { useGetAllDestinationsQuery } from "../slices/destinationApiSlice";
 import "../styles/DestinationList.css";
 import InstallButton from "../components/InstallButton";
+import Footer from "../components/Footer";
 
 const DestinationListPages = () => {
   const { jenis } = useParams();
@@ -50,7 +51,7 @@ const DestinationListPages = () => {
   };
 
   const formattingNameLinkDestinations = (val) => {
-    return val.replace(/\s+/g, "-").toLowerCase();
+    return val.replace(/-/g, "_").toLowerCase().replace(/\s+/g, "-");
   };
 
   return (
@@ -100,6 +101,7 @@ const DestinationListPages = () => {
           </Row>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

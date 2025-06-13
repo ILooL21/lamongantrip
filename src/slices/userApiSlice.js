@@ -23,15 +23,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
-    getUserGoogleData: builder.mutation({
-      query: (data) => ({
-        url: `https://www.googleapis.com/oauth2/v3/userinfo`,
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${data.access_token}`,
-        },
-      }),
-    }),
     register: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/register`,
@@ -97,7 +88,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
 export const {
   useLoginMutation,
   useLoginSocialMutation,
-  useGetUserGoogleDataMutation,
   useRegisterMutation,
   useGetAllUsersQuery,
   useGetUserDataMutation,

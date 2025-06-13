@@ -90,7 +90,19 @@ const ArticleManagementPages = () => {
           </td>
           <td>{article.penulis}</td>
           <td>{article.judul}</td>
-          <td>{article.isi}</td>  
+          <td>
+            <div
+              dangerouslySetInnerHTML={{ __html: article.isi }}
+              style={{
+                maxHeight: "100px",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: "vertical",
+              }}
+            />
+          </td>
           <td>
             <button
               className="btn btn-info"

@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { HomeOutlined, EyeOutlined, EyeInvisibleOutlined, FacebookFilled, GoogleSquareFilled } from "@ant-design/icons";
-import { useLoginMutation, useRegisterMutation, useGetUserGoogleDataMutation, useLoginSocialMutation } from "../slices/userApiSlice";
+import { useLoginMutation, useRegisterMutation, useLoginSocialMutation } from "../slices/userApiSlice";
+import { useGetUserGoogleDataMutation } from "../slices/apiSlice";
 import { setCredentials } from "../slices/authSlice";
 import FormContainer from "../components/FormContainer";
 import Loading from "../components/Loading";
@@ -99,14 +100,15 @@ const FormAuth = () => {
   const loginGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
-        const res = await getUserGoogleData(tokenResponse).unwrap();
+        const res = await getUserGoogleData(tokenResponse);
         if (!isGetUserGoogleDataLoading) {
           const loginRes = await loginSocial({
-            username: res.name,
-            email: res.email,
+            username: res.data.name,
+            email: res.data.email,
             role: "user",
             password: generateRandomString(16),
           }).unwrap();
+          console.log(loginRes);
           if (!isLoginSocialLoading) {
             dispatch(setCredentials(loginRes["access_token"]));
             Swal.fire({
