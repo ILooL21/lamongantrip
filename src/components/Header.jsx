@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../slices/authSlice";
-import { DownOutlined, UserOutlined, MenuOutlined, CloseOutlined } from "@ant-design/icons";
+import { DownOutlined, UserOutlined, MenuOutlined, CloseOutlined, CompassOutlined, EnvironmentOutlined, ReadOutlined, PhoneOutlined, StarOutlined, LogoutOutlined, DashboardOutlined } from "@ant-design/icons";
 import { useLazyGetActiveUserDataQuery } from "../slices/userApiSlice";
 import img from "../assets/logo.png";
 import "../styles/Header.css";
@@ -89,126 +89,184 @@ const Header = () => {
     setIsUserDropdownOpen(false);
     setIsCategoryDropdownOpen(false);
   };
-
   return isLoading ? null : (
-    <header className="header">
-      <div className="header-container">
+    <header className="header-modern">
+      <div className="header-container-modern">
+        {/* Logo Section */}
         <Link
           to="/"
-          className="logo"
+          className="logo-modern"
           onClick={closeAllMenus}>
           <img
             src={img}
-            alt="Logo"
-            className="logo-image"
+            alt="Lamongan Trip Logo"
+            className="logo-image-modern"
           />
+          <div className="logo-text">
+            <span className="logo-title">Lamongan Trip</span>
+            <span className="logo-subtitle">Jelajahi Keindahan</span>
+          </div>
         </Link>
 
-        {/* BARU: Pasang ref pada tombol menu */}
+        {/* Mobile Menu Toggle */}
         <button
-          className="menu-toggle"
+          className="menu-toggle-modern"
           onClick={toggleMenu}
-          ref={menuToggleRef}>
+          ref={menuToggleRef}
+          aria-label="Toggle Navigation Menu">
           {isMenuOpen ? <CloseOutlined /> : <MenuOutlined />}
         </button>
 
-        {/* BARU: Pasang ref pada nav menu */}
+        {/* Navigation Menu */}
         <nav
-          className={`nav-menu ${isMenuOpen ? "active" : ""}`}
+          className={`nav-menu-modern ${isMenuOpen ? "active" : ""}`}
           ref={menuRef}>
+          {/* Rekomendasi Wisata */}
           <Link
             to="/rekomendasi-wisata"
-            className="nav-link"
+            className="nav-link-modern highlight"
             onClick={closeAllMenus}>
-            Rekomendasi Wisata
+            <StarOutlined className="nav-icon" />
+            <span>Rekomendasi Wisata</span>
           </Link>
 
+          {/* Tempat Wisata Dropdown */}
           <div
-            className="dropdown"
+            className="dropdown-modern"
             ref={categoryDropdownRef}>
             <button
-              className="dropdown-toggle"
+              className="dropdown-toggle-modern"
               onClick={toggleCategoryDropdown}>
-              Tempat Wisata <DownOutlined />
+              <EnvironmentOutlined className="nav-icon" />
+              <span>Tempat Wisata</span>
+              <DownOutlined className="dropdown-arrow" />
             </button>
-            <div className={`dropdown-menu ${isCategoryDropdownOpen ? "active" : ""}`}>
+            <div className={`dropdown-menu-modern ${isCategoryDropdownOpen ? "active" : ""}`}>
               <Link
                 to="/destination/"
-                className="dropdown-item"
+                className="dropdown-item-modern"
                 onClick={closeAllMenus}>
-                Semua Wisata
+                <CompassOutlined className="dropdown-icon" />
+                <div className="dropdown-content">
+                  <span className="dropdown-title">Semua Wisata</span>
+                  <span className="dropdown-desc">Jelajahi semua destinasi</span>
+                </div>
               </Link>
               <Link
                 to="/destination/alam"
-                className="dropdown-item"
+                className="dropdown-item-modern"
                 onClick={closeAllMenus}>
-                Wisata Alam
+                <div className="dropdown-icon nature">🌿</div>
+                <div className="dropdown-content">
+                  <span className="dropdown-title">Wisata Alam</span>
+                  <span className="dropdown-desc">Keindahan alam yang menawan</span>
+                </div>
               </Link>
               <Link
                 to="/destination/buatan"
-                className="dropdown-item"
+                className="dropdown-item-modern"
                 onClick={closeAllMenus}>
-                Wisata Buatan
+                <div className="dropdown-icon manmade">🏛️</div>
+                <div className="dropdown-content">
+                  <span className="dropdown-title">Wisata Buatan</span>
+                  <span className="dropdown-desc">Destinasi buatan manusia</span>
+                </div>
               </Link>
               <Link
                 to="/destination/religi"
-                className="dropdown-item"
+                className="dropdown-item-modern"
                 onClick={closeAllMenus}>
-                Wisata Religi
+                <div className="dropdown-icon religious">🕌</div>
+                <div className="dropdown-content">
+                  <span className="dropdown-title">Wisata Religi</span>
+                  <span className="dropdown-desc">Tempat spiritual bersejarah</span>
+                </div>
               </Link>
             </div>
           </div>
 
+          {/* Artikel */}
           <Link
             to="/articles"
-            className="nav-link"
+            className="nav-link-modern"
             onClick={closeAllMenus}>
-            Artikel
-          </Link>
-          <Link
-            to="/contact-us"
-            className="nav-link"
-            onClick={closeAllMenus}>
-            Kontak Kami
+            <ReadOutlined className="nav-icon" />
+            <span>Artikel</span>
           </Link>
 
+          {/* Kontak */}
+          <Link
+            to="/contact-us"
+            className="nav-link-modern"
+            onClick={closeAllMenus}>
+            <PhoneOutlined className="nav-icon" />
+            <span>Kontak Kami</span>
+          </Link>
+
+          {/* User Menu / Auth */}
           {isLogin && userInfo ? (
             <div
-              className="dropdown user-dropdown"
+              className="dropdown-modern user-dropdown-modern"
               ref={userDropdownRef}>
               <button
-                className="dropdown-toggle"
+                className="dropdown-toggle-modern user-toggle"
                 onClick={toggleUserDropdown}>
-                <UserOutlined /> {userInfo?.username} <DownOutlined />
+                <div className="user-avatar">
+                  <UserOutlined />
+                </div>
+                <div className="user-info">
+                  <span className="user-name">{userInfo?.username}</span>
+                  <span className="user-role">{userInfo?.role}</span>
+                </div>
+                <DownOutlined className="dropdown-arrow" />
               </button>
-              <div className={`dropdown-menu ${isUserDropdownOpen ? "active" : ""}`}>
+              <div className={`dropdown-menu-modern user-menu ${isUserDropdownOpen ? "active" : ""}`}>
                 <Link
                   to="/profile"
-                  className="dropdown-item"
+                  className="dropdown-item-modern"
                   onClick={closeAllMenus}>
-                  Profile
+                  <UserOutlined className="dropdown-icon" />
+                  <div className="dropdown-content">
+                    <span className="dropdown-title">Profile</span>
+                    <span className="dropdown-desc">Kelola profil Anda</span>
+                  </div>
                 </Link>
                 {userInfo?.role !== "user" && (
                   <Link
                     to="/admin/dashboard"
-                    className="dropdown-item"
+                    className="dropdown-item-modern"
                     onClick={closeAllMenus}>
-                    Dashboard
+                    <DashboardOutlined className="dropdown-icon" />
+                    <div className="dropdown-content">
+                      <span className="dropdown-title">Dashboard</span>
+                      <span className="dropdown-desc">Panel administrasi</span>
+                    </div>
                   </Link>
                 )}
                 <button
-                  className="dropdown-item"
+                  className="dropdown-item-modern logout-btn"
                   onClick={logoutHandler}>
-                  Logout
+                  <LogoutOutlined className="dropdown-icon" />
+                  <div className="dropdown-content">
+                    <span
+                      className="dropdown-title"
+                      style={{
+                        textAlign: "start",
+                      }}>
+                      Logout
+                    </span>
+                    <span className="dropdown-desc">Keluar dari akun</span>
+                  </div>
                 </button>
               </div>
             </div>
           ) : (
             <Link
               to="/auth"
-              className="nav-link auth-link"
+              className="auth-button-modern"
               onClick={closeAllMenus}>
-              Masuk / Daftar
+              <UserOutlined className="auth-icon" />
+              <span>Masuk / Daftar</span>
             </Link>
           )}
         </nav>
