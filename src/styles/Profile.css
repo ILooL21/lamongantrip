@@ -1,3 +1,452 @@
+/* ===== MODERN PROFILE PAGE STYLES ===== */
+
+.profile-container-modern {
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: calc(100vh - 200px);
+  background: linear-gradient(135deg, #f8fbff 0%, #f1f8f6 100%);
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.profile-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #222;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.profile-icon {
+  color: #007f73;
+  font-size: 2.5rem;
+}
+
+.profile-subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.profile-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 0;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ===== PROFILE CARDS ===== */
+.profile-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 127, 115, 0.1);
+  border: 1px solid rgba(0, 127, 115, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.profile-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #007f73, #00a896);
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 127, 115, 0.15);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f5f5f5;
+}
+
+.card-icon {
+  font-size: 2rem;
+  color: #007f73;
+  background: linear-gradient(135deg, #007f73, #00a896);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+}
+
+.card-description {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0.3rem 0 0 0;
+}
+
+/* ===== FORM STYLES ===== */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label-modern {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.input-wrapper-modern {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  color: #007f73;
+  font-size: 1.1rem;
+  z-index: 2;
+}
+
+.form-input-modern {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 2px solid #e5e5e5;
+  border-radius: 12px;
+  font-size: 1rem;
+  background: #fafafa;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form-input-modern:focus {
+  border-color: #007f73;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(0, 127, 115, 0.1);
+}
+
+.form-input-modern::placeholder {
+  color: #999;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+.password-toggle:hover {
+  color: #007f73;
+  background: rgba(0, 127, 115, 0.1);
+}
+
+.password-info {
+  margin-top: -0.5rem;
+}
+
+.form-helper-text {
+  color: #666;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  display: block;
+  padding: 0.5rem 0;
+  background: linear-gradient(135deg, #f8fbff, #f1f8f6);
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #007f73;
+}
+
+/* ===== BUTTONS ===== */
+.btn-primary-modern,
+.btn-secondary-modern {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary-modern {
+  background: linear-gradient(135deg, #007f73, #005f58);
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 127, 115, 0.3);
+}
+
+.btn-primary-modern:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 127, 115, 0.4);
+}
+
+.btn-secondary-modern {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  color: white;
+  box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+}
+
+.btn-secondary-modern:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 107, 107, 0.4);
+}
+
+.btn-primary-modern:disabled,
+.btn-secondary-modern:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===== UNIFIED FORM STYLES ===== */
+.profile-unified-form {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ===== PROFILE CARDS ===== */
+.profile-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 127, 115, 0.1);
+  border: 1px solid rgba(0, 127, 115, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.profile-submit-section {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1.5rem 0;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 127, 115, 0.1);
+  border: 1px solid rgba(0, 127, 115, 0.1);
+  position: relative;
+  overflow: hidden;
+  max-width: 800px;
+  margin: 2rem auto 0 auto;
+}
+
+.profile-submit-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #007f73, #00a896);
+}
+
+.btn-submit-unified {
+  min-width: 300px;
+  padding: 1.2rem 3rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-top: 30px;
+  background: linear-gradient(135deg, #007f73, #00a896);
+  box-shadow: 0 6px 25px rgba(0, 127, 115, 0.3);
+}
+
+.btn-submit-unified:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 35px rgba(0, 127, 115, 0.4);
+}
+
+/* Ensure vertical layout is strictly enforced */
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+  .profile-cards-container {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .btn-submit-unified {
+    min-width: 250px;
+    padding: 1.1rem 2.5rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-container-modern {
+    padding: 1rem;
+  }
+
+  .profile-title {
+    font-size: 2rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .profile-icon {
+    font-size: 2rem;
+  }
+
+  .profile-subtitle {
+    font-size: 1rem;
+  }
+
+  .profile-card {
+    padding: 1.5rem;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .card-icon {
+    font-size: 1.5rem;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+  }
+
+  .form-input-modern {
+    padding: 0.9rem 0.9rem 0.9rem 2.8rem;
+  }
+
+  .input-icon {
+    left: 0.9rem;
+    font-size: 1rem;
+  }
+
+  .btn-primary-modern,
+  .btn-secondary-modern {
+    padding: 0.9rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .btn-submit-unified {
+    min-width: 200px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+
+  .profile-submit-section {
+    margin-top: 1.5rem;
+    padding: 1rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-cards-container {
+    flex-direction: column;
+  }
+
+  .profile-card {
+    padding: 1rem;
+  }
+
+  .profile-title {
+    font-size: 1.8rem;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+  }
+
+  .form-input-modern {
+    padding: 0.8rem 0.8rem 0.8rem 2.5rem;
+    font-size: 0.95rem;
+  }
+
+  .btn-submit-unified {
+    min-width: 100%;
+    padding: 0.9rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .profile-submit-section {
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+}
+
+/* ===== LOADING ANIMATION INTEGRATION ===== */
+.btn-primary-modern .loading,
+.btn-secondary-modern .loading {
+  color: white;
+}
+
+/* ===== FOCUS ACCESSIBILITY ===== */
+.form-input-modern:focus,
+.password-toggle:focus,
+.btn-primary-modern:focus,
+.btn-secondary-modern:focus {
+  outline: 3px solid rgba(0, 127, 115, 0.3);
+  outline-offset: 2px;
+}
+
+/* ===== SUCCESS STATE ===== */
+.form-input-modern.success {
+  border-color: #28a745;
+  background: #f8fff9;
+}
+
+.form-input-modern.error {
+  border-color: #dc3545;
+  background: #fff8f8;
+}
+
 .form-profile-update {
   max-width: 500px;
   margin: 2rem auto;
