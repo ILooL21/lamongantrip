@@ -9,6 +9,7 @@ import alami from "../assets/alam.jpeg";
 import religi from "../assets/religi.webp";
 import buatan from "../assets/buatan.webp";
 import alun from "../assets/alun.jpg";
+import { ArrowRightOutlined } from "@ant-design/icons";
 
 const HomePages = () => {
   const { data, error, isLoading } = useGetLatestArticleQuery();
@@ -68,7 +69,7 @@ const HomePages = () => {
       </section>
       <InstallButton />
       {/* Tentang Website */}
-      <section className="tentang-section about-split">
+      <section className="tentang-section">
         <div className="about-img-container">
           <img
             src={alun}
@@ -100,38 +101,38 @@ const HomePages = () => {
           {/* Card kecil */}
           <div
             className="place-card"
-            onClick={() => (window.location.href = `/destination/alam`)}>
+            onClick={() => (window.location.href = `/destination/religi`)}>
             <img
-              src={alami}
-              alt="Wisata Bahari Lamongan"
+              src={religi}
+              alt="Wisata Religi"
               className="place-image"
             />
             <div className="place-info">
-              <h3>Wisata Bahari Lamongan</h3>
+              <h3>Wisata Religi</h3>
             </div>
           </div>
           <div
             className="place-card"
-            onClick={() => (window.location.href = `/destination/religi`)}>
+            onClick={() => (window.location.href = `/destination/alam`)}>
             <img
-              src={religi}
-              alt="Masjid Agung Lamongan"
+              src={alami}
+              alt="Wisata Alam"
               className="place-image"
             />
             <div className="place-info">
-              <h3>Masjid Agung Lamongan</h3>
+              <h3>Wisata Alam</h3>
             </div>
-          </div>{" "}
+          </div>
           <div
             className="place-card"
             onClick={() => (window.location.href = `/destination/buatan`)}>
             <img
               src={buatan}
-              alt="Goa Maharani"
+              alt="Wisata Buatan"
               className="place-image"
             />
             <div className="place-info">
-              <h3>Goa Maharani</h3>
+              <h3>Wisata Buatan</h3>
             </div>
           </div>
         </div>
@@ -142,18 +143,18 @@ const HomePages = () => {
             Lihat Semua Destinasi
           </a>
         </div>
-      </section>{" "}
+      </section>
       {/* Artikel Terbaru */}
       <section className="artikel-section">
         <div className="artikel-header-container">
           <div className="artikel-header-text">
             <h5>Artikel</h5>
             <h2>Lihat apa yang sedang terjadi di Lamongan saat ini.</h2>
-            <p>Lamongan, kota wisata dengan beragam pesona, menawarkan keragaman pengalaman yang tidak akan pernah Anda lupakan. Apa saja berita dan informasi terbaru tentang Lamongan?</p>
+            <p>Lamongan, kota wisata dengan beragam pesona, menawarkan keragaman pengalaman yang tidak akan pernah Anda lupakan. Apa saja berita dan informasi terbaru tentang Lamongan?</p>{" "}
             <Link
               to="/articles"
               className="artikel-view-all-btn">
-              Lihat semua Berita & Pembaruan
+              Lihat semua Berita & Pembaruan <ArrowRightOutlined />
             </Link>
           </div>
         </div>
@@ -168,7 +169,7 @@ const HomePages = () => {
                 <div
                   className="artikel-card-image"
                   style={{ backgroundImage: `url(${import.meta.env.VITE_API_URL + item.gambar})` }}>
-                  <div className="artikel-date">{new Date(item.created_at).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "2-digit" }).replace(" ", " ")}</div>
+                  <div className="artikel-date">{new Date(item.created_at).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" }).replace(" ", " ")}</div>
                 </div>
                 <div className="artikel-card-content">
                   <h3>{item.judul}</h3>

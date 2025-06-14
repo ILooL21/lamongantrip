@@ -83,7 +83,7 @@
 /* Hero Section Background & Overlay */
 .hero-bg {
   position: relative;
-  min-height: 600px;
+  min-height: 700px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,13 +116,48 @@
 
 @media (max-width: 768px) {
   .hero-bg {
+    min-height: 400px;
+    padding: 2rem 1rem;
+  }
+
+  .hero-bg .hero-text h2 {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .hero-bg .hero-text p {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 1.5rem !important;
+    max-width: 90% !important;
+  }
+
+  .btn-selengkapnya {
+    font-size: 1rem !important;
+    padding: 12px 24px !important;
+    border-radius: 8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-bg {
     min-height: 350px;
   }
+
   .hero-bg .hero-text h2 {
-    font-size: 1.5rem;
+    font-size: 1.5rem !important;
+    margin-bottom: 0.8rem !important;
   }
+
   .hero-bg .hero-text p {
-    font-size: 1rem;
+    font-size: 0.95rem !important;
+    margin-bottom: 1.2rem !important;
+  }
+
+  .btn-selengkapnya {
+    font-size: 0.9rem !important;
+    padding: 10px 20px !important;
   }
 }
 
@@ -133,9 +168,10 @@
   background-color: #f9f9f9;
   padding: 80px 20px;
   text-align: center;
-  border-radius: 16px;
-  max-width: 900px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: flex-start;
+  gap: 3rem;
+  background: #fff;
 }
 
 .tentang-section h2 {
@@ -151,18 +187,6 @@
   max-width: 700px;
 }
 
-/* Tentang Section Split Layout ala Love Bali */
-.about-split {
-  display: flex;
-  align-items: flex-start;
-  gap: 3rem;
-  background: #fff;
-  border-radius: 24px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-  max-width: 1400px;
-  min-height: 420px;
-}
-
 .about-img-container {
   flex: 1 1 45%;
   display: flex;
@@ -171,6 +195,7 @@
 }
 
 .about-img {
+  margin: 30px;
   width: 100%;
   aspect-ratio: 16/10;
   border-radius: 24px;
@@ -232,6 +257,68 @@
   }
   .about-content p {
     font-size: 0.98rem;
+  }
+}
+
+/* Responsive untuk tentang section - gambar di antara h2 dan p */
+@media (max-width: 768px) {
+  .tentang-section {
+    margin: 40px 5% !important;
+    padding: 2rem 1.5rem !important;
+  }
+
+  .about-split {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 2rem 1.5rem !important;
+    gap: 0 !important;
+  }
+
+  .about-img-container {
+    display: none !important;
+  }
+
+  .about-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .about-greeting {
+    order: 1;
+    font-size: 1.3rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .about-content h2 {
+    order: 2;
+    font-size: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Gambar ditambahkan via pseudo-element agar bisa diposisikan di antara */
+  .about-content h2::after {
+    content: "";
+    display: block;
+    width: 300px;
+    height: 180px;
+    max-width: 90vw;
+    margin: 1.5rem auto;
+    background-image: url("../assets/alun.jpg");
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .about-content p {
+    order: 3;
+    font-size: 1rem !important;
+    margin-top: 0 !important;
+    max-width: 100% !important;
+    line-height: 1.6 !important;
   }
 }
 
@@ -298,6 +385,25 @@
   color: #005f58;
 }
 
+/* kategori section ketika 768 padding hilang */
+@media (max-width: 768px) {
+  .kategori-section {
+    margin: 0 5%;
+    padding: 40px 0;
+  }
+
+  .kategori-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .kategori-card {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+  }
+}
+
 /* Artikel Section */
 .artikel-section {
   margin: 3rem 8%;
@@ -348,6 +454,7 @@
   text-decoration: none;
   font-weight: 500;
   transition: all 0.2s ease;
+  gap: 0.5rem; /* Menambah space antara text dan icon */
 }
 
 .artikel-view-all-btn:hover {

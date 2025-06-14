@@ -163,7 +163,7 @@ button.dropdown-item:hover {
     display: none;
     position: fixed;
     /* Adjust top position to match header height */
-    top: 120px; /* Or whatever the exact height of your header is */
+    top: 90px; /* Or whatever the exact height of your header is */
     left: 0;
     right: 0;
     background: white;
