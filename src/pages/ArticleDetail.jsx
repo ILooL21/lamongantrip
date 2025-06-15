@@ -3,9 +3,10 @@ import Header from "../components/Header";
 import { useGetArticleByIdMutation } from "../slices/articleApiSlice";
 import Loading from "../components/Loading";
 import { useEffect, useState } from "react";
-import "../styles/ArticleDetail.css"; // Tambahkan CSS ini
+import "../styles/ArticleDetail.css";
 import InstallButton from "../components/InstallButton";
 import Footer from "../components/Footer";
+import { CalendarOutlined, UserOutlined, TagOutlined } from "@ant-design/icons";
 
 const ArticleDetailPages = () => {
   const { id } = useParams();
@@ -77,41 +78,72 @@ const ArticleDetailPages = () => {
       </div>
     );
   }
-
   return (
     <div className="article-detail-container">
       <Header />
       <InstallButton />
-      <div className="article-content">
-        <h1 className="article-title">{data.judul}</h1>
-        <p className="article-author">Ditulis oleh {data.penulis}</p>
-        <p className="article-meta">{formatWaktu(data.created_at)}</p>
 
-        {data.gambar && (
-          <img
-            src={import.meta.env.VITE_API_URL + data.gambar}
-            alt="Gambar Artikel"
-            className="article-image"
+      {/* Hero Section with Article Image */}
+      {data.gambar && (
+        <div
+          className="article-hero"
+          style={{
+            backgroundImage: `linear-gradient(to bottom, rgba(0,127,115,0.3), rgba(0,0,0,0.7)), url(${import.meta.env.VITE_API_URL + data.gambar})`,
+          }}></div>
+      )}
+
+      <div className="article-card-container">
+        {/* Single Card for All Article Content */}
+        <div className="article-card">
+          {/* Article Header */}
+          <div className="article-header">
+            <h1 className="article-detail-title">{data.judul}</h1>
+            <div className="article-meta">
+              <div className="article-date">
+                <CalendarOutlined /> {formatWaktu(data.created_at)}
+              </div>
+              <div className="article-author">
+                <UserOutlined /> {data.penulis}
+              </div>
+            </div>
+          </div>
+
+          {/* Article Image (Kept inside card as well) */}
+          {data.gambar && (
+            <div className="article-image-wrapper">
+              <img
+                src={import.meta.env.VITE_API_URL + data.gambar}
+                alt="Gambar Artikel"
+                className="article-image"
+              />
+            </div>
+          )}
+
+          {/* Article Content */}
+          <div
+            className="article-content"
+            dangerouslySetInnerHTML={{ __html: data.isi }}
           />
-        )}
 
-        <div dangerouslySetInnerHTML={{ __html: data.isi }} />
-
-        {data.tags.length > 0 && (
-          <div className="article-tags">
-            <h3>Tags:</h3>
-            <ul>
+          {/* Article Tags */}
+          {data.tags.length > 0 && (
+            <div className="article-detail-tags">
+              <TagOutlined
+                style={{ color: "#007f73", marginRight: "10px" }}
+                className="tag-icon"
+              />
               {data.tags.map((tag, index) => (
-                <li
+                <span
                   key={index}
                   className="tag-item">
                   #{tag}
-                </li>
+                </span>
               ))}
-            </ul>
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
+
       <Footer />
     </div>
   );

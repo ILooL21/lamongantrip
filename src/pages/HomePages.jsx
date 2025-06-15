@@ -173,12 +173,6 @@ const HomePages = () => {
                 </div>
                 <div className="artikel-card-content">
                   <h3>{item.judul}</h3>
-                  <div
-                    className="artikel-excerpt"
-                    dangerouslySetInnerHTML={{
-                      __html: item.isi.length > 120 ? item.isi.replace(/<\/?[^>]+(>|$)/g, "").slice(0, 120) + "..." : item.isi.replace(/<\/?[^>]+(>|$)/g, ""),
-                    }}
-                  />
                 </div>
               </div>
             ))
