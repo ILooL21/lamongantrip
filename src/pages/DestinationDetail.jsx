@@ -27,6 +27,8 @@ const DestinationDetailPages = () => {
         try {
           const response = await getDestinationData({ nama }).unwrap();
 
+          document.title = `${response.nama_tempat} | Lamongan Trip`;
+
           // Parse sosmed & tiket
           const sosmed = JSON.parse(response.sosmed);
 
@@ -54,19 +56,14 @@ const DestinationDetailPages = () => {
       fetchData();
     }
   }, [nama, getDestinationData]);
-
   const renderMap = () => {
     if (!position.lat || !position.lng) return null;
 
     return (
-      <div
-        className="map-container"
-        style={{ marginTop: "20px", marginBottom: "20px" }}>
-        <div style={{ width: "100%", height: "100%" }}>
-          <h3 style={{ textAlign: "start", marginBottom: "10px" }}>Lokasi</h3>
-          <p style={{ textAlign: "start", marginBottom: "10px" }}>Klik peta untuk melihat lokasi di Google Maps</p>
-        </div>
-        <div style={{ width: "100%", height: "400px", borderRadius: "10px", overflow: "hidden" }}>
+      <>
+        <h3>Lokasi</h3>
+        <p className="map-instruction">Klik peta untuk melihat lokasi di Google Maps</p>
+        <div className="map-wrapper">
           <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
             <Map
               defaultZoom={18}
@@ -74,20 +71,20 @@ const DestinationDetailPages = () => {
               mapId={import.meta.env.VITE_GOOGLE_MAPS_MAP_ID}
               onClick={() => {
                 window.open(`https://www.google.com/maps/search/?api=1&query=${position.lat},${position.lng}`, "_blank");
-              }}
-            />
-            <AdvancedMarker
-              id="marker"
-              position={position}>
-              <Pin
-                background={"#FF0000"}
-                borderColor={"white"}
-                glyphColor={"white"}
-              />
-            </AdvancedMarker>
+              }}>
+              <AdvancedMarker
+                id="marker"
+                position={position}>
+                <Pin
+                  background={"#007f73"}
+                  borderColor={"white"}
+                  glyphColor={"white"}
+                />
+              </AdvancedMarker>
+            </Map>
           </APIProvider>
         </div>
-      </div>
+      </>
     );
   };
 
@@ -96,64 +93,90 @@ const DestinationDetailPages = () => {
   };
 
   if (isLoading || !data) return <Loading />;
-
   return (
-    <div>
+    <div className="destination-detail-container">
       <Header />
       <InstallButton />
-      <div className="container-detail-tempat-wisata">
-        <Breadcrumb
-          className="breadcrumb-dashboard"
-          items={[
-            { title: <a href="/destination">Tempat Wisata</a> },
-            {
-              title: <a href={`/destination/${data.jenis.toLowerCase()}`}>{data.jenis}</a>,
-            },
-            { title: capitalizeEachFirstLetter(data.nama_tempat) },
-          ]}
-        />
-
-        <div className="detail-tempat-wisata">
-          <h1>{capitalizeEachFirstLetter(data.nama_tempat)}</h1>
-          <img
-            src={import.meta.env.VITE_API_URL + data.gambar}
-            alt={data.nama_tempat}
+      {/* Hero Section with Destination Image Background */}
+      <div
+        className="destination-hero"
+        style={{
+          backgroundImage: `linear-gradient(to bottom, rgba(0,127,115,0.3), rgba(0,0,0,0.7)), url(${import.meta.env.VITE_API_URL + data.gambar})`,
+        }}></div>{" "}
+      <div className="detail-destination-card-container">
+        {/* Main Content Card */}
+        <div className="detail-destination-card">
+          {/* Breadcrumb inside card */}
+          <Breadcrumb
+            className="breadcrumb-destination"
+            items={[
+              { title: <a href="/destination">Tempat Wisata</a> },
+              {
+                title: <a href={`/destination/${data.jenis.toLowerCase()}`}>{data.jenis}</a>,
+              },
+              { title: capitalizeEachFirstLetter(data.nama_tempat) },
+            ]}
           />
-          <p>Jenis: Wisata {data.jenis}</p>
-          <p>Alamat: {data.alamat}</p>
-          <div dangerouslySetInnerHTML={{ __html: data.deskripsi }} />
-
+          {/* Title and address above image */}
+          <div className="destination-title">
+            <h1>{capitalizeEachFirstLetter(data.nama_tempat)}</h1>
+            <p className="destination-address">
+              <span className="address-icon">📍</span>
+              {data.alamat}
+            </p>
+          </div>
+          {/* Destination Image in Card */}
+          <div className="destination-image-wrapper">
+            <img
+              src={import.meta.env.VITE_API_URL + data.gambar}
+              alt={data.nama_tempat}
+              className="destination-image"
+            />
+          </div>
+          {/* Destination Info */}
+          <div className="destination-info">
+            <div className="info-item">
+              <span className="info-label">Jenis Wisata:</span>
+              <span className="info-value">Wisata {data.jenis}</span>
+            </div>
+          </div>
+          {/* Destination Description */}
+          <div
+            className="destination-description"
+            dangerouslySetInnerHTML={{ __html: data.deskripsi }}
+          />{" "}
+          {/* Online Ticket Section */}
           {data.deskripsi_tiket && data.link_tiket && data.deskripsi_tiket !== "undefined" && data.link_tiket !== "undefined" && data.deskripsi_tiket.trim() !== "" && data.link_tiket.trim() !== "" && (
-            <>
+            <div className="ticket-section">
               <h3>Pembelian Tiket Online</h3>
-              <div className="tiket-container">
+              <div className="ticket-container">
                 <p>{data.deskripsi_tiket}</p>
                 <a
                   href={data.link_tiket}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="tiket-link">
+                  className="ticket-button">
                   Beli Tiket
                 </a>
               </div>
-            </>
-          )}
-
-          <h3>Berikut adalah media sosial tempat wisata yang bisa diikuti</h3>
-          <>
+            </div>
+          )}{" "}
+          {/* Social Media Section */}
+          <div className="destination-social-section">
+            <h3>Media Sosial</h3>
             {Object.values(data.sosmed).every((link) => !link) ? (
-              <p>Tempat wisata belum memiliki sosial media resmi.</p>
+              <p className="no-social">Tempat wisata belum memiliki sosial media resmi.</p>
             ) : (
-              <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
+              <div className="social-links">
                 {Object.entries(data.sosmed).map(([platform, link]) => {
                   if (!link) return null;
 
                   const icons = {
-                    instagram: <InstagramOutlined style={{ fontSize: 20, color: "#C13584" }} />,
-                    facebook: <FacebookFilled style={{ fontSize: 20, color: "#4267B2" }} />,
-                    twitter: <XOutlined style={{ fontSize: 20, color: "black" }} />,
-                    youtube: <YoutubeFilled style={{ fontSize: 20, color: "#FF0000" }} />,
-                    tiktok: <TikTokOutlined style={{ fontSize: 20, color: "black" }} />,
+                    instagram: <InstagramOutlined className="social-icon instagram" />,
+                    facebook: <FacebookFilled className="social-icon facebook" />,
+                    twitter: <XOutlined className="social-icon twitter" />,
+                    youtube: <YoutubeFilled className="social-icon youtube" />,
+                    tiktok: <TikTokOutlined className="social-icon tiktok" />,
                   };
 
                   return (
@@ -161,16 +184,18 @@ const DestinationDetailPages = () => {
                       key={platform}
                       href={link}
                       target="_blank"
-                      className="sosmed-link"
-                      rel="noopener noreferrer">
+                      className="social-link icon-only"
+                      rel="noopener noreferrer"
+                      title={platform}>
                       {icons[platform]}
                     </a>
                   );
                 })}
               </div>
             )}
-          </>
-          <div className="map-container">{renderMap()}</div>
+          </div>
+          {/* Map Section */}
+          <div className="map-section">{renderMap()}</div>
         </div>
       </div>
       <Footer />

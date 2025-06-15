@@ -1,77 +1,403 @@
-.container-detail-tempat-wisata {
-  max-width: 960px;
-  margin: 40px auto;
-  padding: 0 20px;
+/* Main container for destination detail */
+.destination-detail-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8f9fa;
 }
 
-.detail-tempat-wisata h1 {
-  text-align: center;
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 20px;
+/* Hero Section with Background Image */
+.destination-hero {
+  position: relative;
+  height: 60vh;
+  min-height: 400px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 2rem;
+  margin-top: -1px; /* Fix potential gap with header */
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+}
+
+.hero-category {
+  background-color: rgba(0, 127, 115, 0.85);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+/* Destination Card Container */
+.detail-destination-card-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: -3rem auto 3rem;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+/* Breadcrumb styling */
+.breadcrumb-destination {
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
+
+/* Main Card */
+.detail-destination-card {
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+}
+
+/* Destination Title */
+.destination-title {
+  margin-bottom: 1.5rem;
+}
+
+.destination-title h1 {
   color: #007f73;
-}
-.detail-tempat-wisata img {
-  max-width: 600px; /* Biar ukurannya tidak terlalu besar */
-  width: 100%; /* Responsif */
-  max-height: 350px; /* Batasi tinggi maksimal */
-  object-fit: cover; /* Biar gambar tetap proporsional */
-  border-radius: 7px;
-  margin: 0 auto 20px; /* Pusatkan gambar dan kasih jarak bawah */
-  display: block; /* Supaya margin auto bekerja */
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  font-weight: 700;
 }
 
-.detail-tempat-wisata p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #444;
-  margin: 10px 0;
+.destination-address {
+  display: flex;
+  align-items: center;
+  color: #6c757d;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  margin-bottom: 3rem;
+  line-height: 1.4;
 }
-.detail-tempat-wisata p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #444;
-  margin: 10px 0;
+
+.address-icon {
+  margin-right: 0.5rem;
 }
-.detail-tempat-wisata h3 {
-  margin-top: 40px;
-  font-size: 20px;
+
+/* Destination Image in Card */
+.destination-image-wrapper {
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.destination-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Destination Info Section */
+.destination-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-label {
   font-weight: 600;
-  color: #333;
+  color: #6c757d;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
 }
 
-.detail-tempat-wisata #maps-link {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  transition: transform 0.2s ease !important;
+.info-value {
+  font-size: 1.1rem;
+  color: #212529;
 }
 
-.detail-tempat-wisata .sosmed-link {
-  display: inline-flex;
+/* Destination Description */
+.destination-description {
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+  color: #495057;
+  font-size: 1rem;
+}
+
+.destination-description p {
+  margin-bottom: 1.2rem;
+}
+
+.destination-description h2,
+.destination-description h3 {
+  color: #007f73;
+  margin: 1.5rem 0 1rem;
+}
+
+/* Ticket Section */
+.ticket-section {
+  background-color: #f1f9f8;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+  border: 1px dashed #007f73;
+}
+
+.ticket-section h3 {
+  color: #007f73;
+  margin-top: 0;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.ticket-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ticket-container p {
+  flex: 1;
+  min-width: 200px;
+  margin: 0;
+}
+
+.ticket-button {
+  background-color: #007f73;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  text-align: center;
+  min-width: 150px;
+}
+
+.ticket-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 127, 115, 0.2);
+  background-color: #006b61;
+}
+
+/* Social Media Section */
+.destination-social-section {
+  margin-bottom: 2.5rem;
+}
+
+.destination-social-section h3 {
+  color: #212529;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.no-social {
+  font-style: italic;
+  color: #6c757d;
+}
+
+.social-links {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0.75rem;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.social-links::-webkit-scrollbar {
+  height: 4px;
+}
+
+.social-links::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 127, 115, 0.3);
+  border-radius: 10px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  background: #f8f9fa;
+  border-radius: 2rem;
+  text-decoration: none;
+  color: #495057;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.social-link.icon-only {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #f9f9f9;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-form .submit-button {
-  width: 100%;
+.social-icon {
+  font-size: 1.25rem;
 }
 
-.detail-tempat-wisata a:hover {
-  transform: scale(1.1);
+.icon-only .social-icon {
+  margin-right: 0;
 }
-@media screen and (max-width: 768px) {
-  .container-detail-tempat-wisata {
-    padding: 0 10px;
+
+.instagram {
+  color: #e1306c;
+}
+
+.facebook {
+  color: #1877f2;
+}
+
+.twitter {
+  color: #000000;
+}
+
+.youtube {
+  color: #ff0000;
+}
+
+.tiktok {
+  color: #000000;
+}
+
+.social-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.social-link.icon-only:hover {
+  transform: scale(1.12);
+}
+
+.social-name {
+  text-transform: capitalize;
+  display: none;
+}
+
+/* Map Section */
+.map-section {
+  margin-top: 1rem;
+}
+
+.map-section h3 {
+  color: #212529;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.map-instruction {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.map-wrapper {
+  height: 400px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .destination-hero {
+    height: 40vh;
+    min-height: 300px;
   }
 
-  .detail-tempat-wisata img {
-    max-height: 250px;
+  .detail-destination-card-container {
+    padding: 0 1rem;
+    margin-top: -2rem;
+  }
+
+  .detail-destination-card {
+    padding: 1.5rem;
+  }
+
+  .destination-image-wrapper {
+    margin: -1.5rem -1.5rem 1.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .destination-image {
+    width: 90%;
+  }
+
+  .ticket-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ticket-button {
+    width: 100%;
+  }
+
+  .map-wrapper {
+    height: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .destination-hero {
+    min-height: 250px;
+  }
+
+  .hero-content {
+    padding: 0 1rem;
+  }
+
+  .social-link.icon-only {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .social-icon {
+    font-size: 1.1rem;
+  }
+
+  .social-links {
+    gap: 0.5rem;
   }
 }

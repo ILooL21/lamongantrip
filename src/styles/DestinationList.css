@@ -1,27 +1,191 @@
-.container-destination-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px;
+/* Main container */
+.destination-list-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8f9fa;
 }
 
+/* Hero Section */
+.destination-list-hero {
+  position: relative;
+  height: 50vh;
+  min-height: 350px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+  margin-top: -1px; /* Fix potential gap with header */
+}
+
+.hero-content {
+  text-align: center;
+  color: white;
+  max-width: 800px;
+  padding: 0 2rem;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  opacity: 0.9;
+}
+
+/* Destination List Wrapper */
+.destination-list-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto 3rem;
+  position: relative;
+  z-index: 10;
+  padding: 0 1.5rem;
+}
+
+/* Grid Layout for Cards */
+.destination-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2rem;
+}
+
+/* Destination Card */
 .destination-card {
-  border-radius: 8px;
+  border-radius: 0.5rem;
   overflow: hidden;
-  transition: transform 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  background: white;
+  cursor: pointer;
+  height: 100%;
+  position: relative;
+  aspect-ratio: 1 / 0.8;
 }
 
 .destination-card:hover {
-  transform: scale(1.02);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 127, 115, 0.2);
 }
 
-.destination-image {
-  height: 200px;
-  object-fit: cover;
+.card-image-container {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.card-image {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
 }
 
-.destination-page-title {
+.destination-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+.card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2), transparent);
+  color: white;
+  padding: 2rem 1.5rem 1.25rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 40%;
+}
+
+.destination-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: auto;
+  color: white;
+  line-height: 1.2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  padding-bottom: 0.5rem;
+}
+
+.destination-type {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-weight: 500;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  align-self: flex-start;
+  position: relative;
+  padding: 0.3rem 0;
+}
+
+/* Removed address styles */
+
+/* No Data Styling */
+.no-data {
   text-align: center;
-  padding: 20px;
+  color: #6c757d;
+  padding: 2rem 0;
+}
+
+.no-data-img {
+  width: 220px;
+  margin-bottom: 1.5rem;
+  opacity: 0.6;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .destination-list-hero {
+    height: 40vh;
+    min-height: 250px;
+  }
+
+  .destination-list-wrapper {
+    margin-top: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .destination-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .destination-name {
+    font-size: 1.6rem;
+  }
+
+  .destination-card {
+    aspect-ratio: 1 / 0.85;
+  }
+}
+
+@media (max-width: 576px) {
+  .destination-list-hero {
+    min-height: 200px;
+  }
+
+  .hero-content {
+    padding: 0 1rem;
+  }
+
+  .destination-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .destination-name {
+    font-size: 1.3rem;
+  }
 }

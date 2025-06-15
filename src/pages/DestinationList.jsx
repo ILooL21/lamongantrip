@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Card, Row, Col } from "antd";
 import img from "../assets/no-result-data.webp";
 
 import Swal from "sweetalert2";
@@ -53,52 +52,74 @@ const DestinationListPages = () => {
   const formattingNameLinkDestinations = (val) => {
     return val.replace(/-/g, "_").toLowerCase().replace(/\s+/g, "-");
   };
+  // Import tugu image
+  const tuguImg = new URL("../assets/tugu.jpg", import.meta.url).href;
+  const alamImg = new URL("../assets/alam.jpeg", import.meta.url).href;
+  const religiImg = new URL("../assets/religi.webp", import.meta.url).href;
+  const buatanImg = new URL("../assets/buatan.webp", import.meta.url).href;
+
+  // Select hero background based on destination type
+  const getHeroBackground = () => {
+    if (!jenis) return tuguImg;
+
+    switch (jenis.toLowerCase()) {
+      case "alam":
+        return alamImg;
+      case "religi":
+        return religiImg;
+      case "buatan":
+        return buatanImg;
+      default:
+        return tuguImg;
+    }
+  };
 
   return (
-    <div>
+    <div className="destination-list-container">
       <Header />
       <InstallButton />
-      <div className="destination-page-title">
-        <h1>{jenis ? `Tempat Wisata ${jenis.charAt(0).toUpperCase() + jenis.slice(1)}` : "Semua Tempat Wisata"}</h1>
-      </div>
-      <div className="container-destination-list">
+      {/* Hero Section with Background Image */}
+      <div
+        className="destination-list-hero"
+        style={{
+          backgroundImage: `linear-gradient(to bottom, rgba(0,127,115,0.7), rgba(0,0,0,0.7)), url(${getHeroBackground()})`,
+        }}>
+        <div className="hero-content">
+          <h1 className="hero-title">{jenis ? `Wisata ${jenis.charAt(0).toUpperCase() + jenis.slice(1)}` : "Semua Tempat Wisata"}</h1>
+          <p className="hero-subtitle">Jelajahi keindahan destinasi wisata di Indonesia</p>
+        </div>
+      </div>{" "}
+      <div className="destination-list-wrapper">
         {filteredDestinations.length === 0 ? (
-          <div
-            className="no-data"
-            style={{ textAlign: "center", color: "#999" }}>
+          <div className="no-data">
             <img
               src={img}
               alt="No results"
-              style={{ width: 220, marginBottom: 16, opacity: 0.5 }}
+              className="no-data-img"
             />
             <h2>Tidak ada data tujuan wisata</h2>
           </div>
         ) : (
-          <Row gutter={[16, 16]}>
+          <div className="destination-grid">
             {filteredDestinations.map((item) => (
-              <Col
-                xs={24}
-                sm={12}
-                md={8}
-                lg={6}
-                key={item.id_tempat_wisata}>
-                <Card
-                  hoverable
-                  cover={
-                    <img
-                      alt={item.nama_tempat}
-                      src={`${import.meta.env.VITE_API_URL}${item.gambar}`}
-                      className="card-image"
-                      style={{ height: 200, objectFit: "cover" }}
-                    />
-                  }
-                  onClick={() => (window.location.href = `/destination/detail/${formattingNameLinkDestinations(item.nama_tempat)}`)}>
-                  <h3>{capitalizeEachFirstLetter(item.nama_tempat)}</h3>
-                  {!jenis && <p>Wisata {capitalizeEachFirstLetter(item.jenis)}</p>}
-                </Card>
-              </Col>
+              <div
+                className="destination-card"
+                key={item.id_tempat_wisata}
+                onClick={() => (window.location.href = `/destination/detail/${formattingNameLinkDestinations(item.nama_tempat)}`)}>
+                <div className="card-image-container">
+                  <img
+                    alt={item.nama_tempat}
+                    src={`${import.meta.env.VITE_API_URL}${item.gambar}`}
+                    className="card-image"
+                  />
+                </div>{" "}
+                <div className="card-content">
+                  <h2 className="destination-name">{capitalizeEachFirstLetter(item.nama_tempat)}</h2>
+                  {!jenis && <p className="destination-type">{capitalizeEachFirstLetter(item.jenis)}</p>}
+                </div>
+              </div>
             ))}
-          </Row>
+          </div>
         )}
       </div>
       <Footer />

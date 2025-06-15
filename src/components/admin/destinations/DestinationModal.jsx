@@ -77,6 +77,8 @@ const DestinationModal = ({ isDetailModal, isEditModal, isAddModal, id_destinati
             latitude: res.latitude || "",
             longitude: res.longitude || "",
             jenis: res.jenis || "",
+            deskripsi_tiket: res.deskripsi_tiket || "",
+            link_tiket: res.link_tiket || "",
             sosmed: JSON.parse(res.sosmed) || {
               instagram: "",
               facebook: "",
@@ -422,7 +424,7 @@ const DestinationModal = ({ isDetailModal, isEditModal, isAddModal, id_destinati
           <label>Pembelian Tiket Online</label>
           {isDetailModal ? (
             // apakah ada deskripsi tiket dan link tiket
-            formData.deskripsi_tiket || formData.link_tiket ? (
+            formData.deskripsi_tiket && formData.link_tiket ? (
               <div>
                 <p>{formData.deskripsi_tiket || "Tidak ada deskripsi tiket"}</p>
                 <p>
