@@ -312,7 +312,7 @@ const FormAuth = () => {
               {isActive ? "Sudah punya akun? " : "Belum punya akun? "}
               <button
                 type="button"
-                className="toggle-btn"
+                className="toggle-auth-btn"
                 onClick={toggleForm}>
                 {isActive ? "Masuk di sini" : "Daftar di sini"}
               </button>

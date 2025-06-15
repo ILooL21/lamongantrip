@@ -452,7 +452,7 @@
   margin: 0;
 }
 
-.toggle-btn {
+.toggle-auth-btn {
   background: none;
   border: none;
   color: #007f73;
@@ -465,7 +465,7 @@
   transition: all 0.3s ease;
 }
 
-.toggle-btn:hover {
+.toggle-auth-btn:hover {
   color: #00a896;
   text-decoration: underline;
 }
@@ -624,7 +624,6 @@
 .password-toggle:focus,
 .submit-btn:focus,
 .google-btn:focus,
-.toggle-btn:focus,
 .home-link:focus {
   outline: 3px solid rgba(0, 127, 115, 0.3);
   outline-offset: 2px;
