@@ -98,7 +98,7 @@ const ArticleDetailPages = () => {
           {/* Article Header */}
           <div className="article-header">
             <h1 className="article-detail-title">{data.judul}</h1>
-            <div className="article-meta">
+            <div className="article-detail-meta">
               <div className="article-date">
                 <CalendarOutlined /> {formatWaktu(data.created_at)}
               </div>

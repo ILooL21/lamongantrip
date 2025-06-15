@@ -44,7 +44,7 @@
   hyphens: auto;
 }
 
-.article-meta {
+.article-detail-meta {
   display: flex;
   flex-wrap: wrap;
   gap: clamp(0.7rem, 2vw, 1.2rem);
@@ -287,7 +287,7 @@
     margin-top: -2rem;
   }
 
-  .article-meta {
+  .article-detail-meta {
     flex-wrap: wrap;
   }
 }
@@ -302,7 +302,7 @@
     display: none;
   }
 
-  .article-meta {
+  .article-detail-meta {
     gap: 0.8rem;
   }
 }
