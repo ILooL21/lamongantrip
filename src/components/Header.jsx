@@ -265,7 +265,6 @@ const Header = () => {
               to="/auth"
               className="auth-button-modern"
               onClick={closeAllMenus}>
-              <UserOutlined className="auth-icon" />
               <span>Masuk / Daftar</span>
             </Link>
           )}

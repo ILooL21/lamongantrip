@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { HomeOutlined, EyeOutlined, EyeInvisibleOutlined, FacebookFilled, GoogleSquareFilled } from "@ant-design/icons";
+import { HomeOutlined, EyeOutlined, EyeInvisibleOutlined, GoogleSquareFilled, UserOutlined, MailOutlined, LockOutlined, CompassOutlined, CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { useLoginMutation, useRegisterMutation, useLoginSocialMutation } from "../slices/userApiSlice";
 import { useGetUserGoogleDataMutation } from "../slices/apiSlice";
 import { setCredentials } from "../slices/authSlice";
-import FormContainer from "../components/FormContainer";
 import Loading from "../components/Loading";
 import Swal from "sweetalert2";
 import "../styles/Form.css";
 import { useGoogleLogin } from "@react-oauth/google";
-import FacebookLogin from "react-facebook-login";
 
 const FormAuth = () => {
   // Login State
@@ -23,7 +21,9 @@ const FormAuth = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isActive, setIsActive] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [showRegisterPassword, setShowRegisterPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [isSame, setIsSame] = useState(false);
 
@@ -46,14 +46,10 @@ const FormAuth = () => {
       setHasNavigated(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Dependensi kosong, useEffect hanya dijalankan sekali
+  }, []);
 
   const toggleForm = () => {
     setIsActive(!isActive);
-  };
-
-  const toggleVisible = () => {
-    setIsVisible(!isVisible);
   };
 
   const loginHandler = async (e) => {
@@ -127,31 +123,6 @@ const FormAuth = () => {
     onError: () => console.log("Login Failed"),
   });
 
-  const handleFacebookCallback = (response) => {
-    if (response?.status === "unknown") {
-      console.error("Sorry!", "Something went wrong with facebook Login.");
-      return;
-    }
-    const { name, email } = response;
-    const password = generateRandomString(16);
-
-    loginSocial({ username: name, email, role: "user", password })
-      .unwrap()
-      .then((res) => {
-        dispatch(setCredentials(res["access_token"]));
-        Swal.fire({
-          icon: "success",
-          title: "Berhasil",
-          text: "Login berhasil",
-        }).then(() => {
-          window.location.reload();
-        });
-      })
-      .catch((err) => {
-        console.error("Failed to login with Facebook:", err);
-      });
-  };
-
   useEffect(() => {
     setIsSame(password === confirmPassword);
   }, [password, confirmPassword]);
@@ -195,174 +166,170 @@ const FormAuth = () => {
   };
 
   return (
-    <FormContainer>
-      <div
-        className={isActive ? "container active" : "container"}
-        id="container">
-        <div className="form-container sign-up">
-          <form onSubmit={registerHandler}>
-            <h1>Daftar</h1>
-            <span>Daftarkan dirimu dengan mengisi data dibawah</span>
-            <div className="input-group">
-              <input
-                type="text"
-                placeholder="Username"
-                name="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div className="input-group">
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="input-group">
-              <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div className="input-group">
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                name="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
-            {(password !== "" || confirmPassword !== "") && (
-              <small
-                id="same-password-msg"
-                style={{ color: isSame ? "green" : "red" }}>
-                {isSame ? "Password sama" : "Password tidak sama"}
-              </small>
-            )}
-            <button
-              className="submit-button"
-              disabled={isRegisterLoading}
-              type="submit">
-              {isRegisterLoading ? <Loading /> : "Daftar"}
-            </button>
-          </form>
-        </div>
-        <div className="form-container sign-in">
-          <form onSubmit={loginHandler}>
-            <h1>Masuk</h1>
-            <span>Login untuk menggunakan semua fitur</span>
-            <div className="input-group">
-              <input
-                type="text"
-                placeholder="Email"
-                name="Email"
-                value={loginEmail}
-                onChange={(e) => setLoginEmail(e.target.value)}
-              />
-            </div>
-            <div className="input-group">
-              <input
-                id="loginpassword"
-                type={isVisible ? "text" : "password"}
-                placeholder="Password"
-                name="password"
-                value={loginPassword}
-                onChange={(e) => setLoginPassword(e.target.value)}
-              />
-              <span
-                className="eye"
-                onClick={toggleVisible}>
-                {isVisible ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-              </span>
-            </div>
-            <button
-              className="submit-button"
-              disabled={isLoginLoading}
-              type="submit">
-              {isLoginLoading ? <Loading /> : "Masuk"}
-            </button>
-            {/* tambahkan atau login menggunakan akun sosmed */}
-            <div className="social-login">
-              <p>Atau masuk dengan</p>
-              <div className="social-button-container">
+    <div className="auth-page">
+      <div className="auth-background"></div>
+      <div className="auth-overlay"></div>
+
+      <div className="auth-container">
+        <div className="auth-card">
+          {/* Header */}
+          <div className="auth-header">
+            <CompassOutlined className="auth-icon" />
+            <h1 className="auth-title">{isActive ? "Daftar Akun Baru" : "Masuk ke Akun"}</h1>
+            <p className="auth-subtitle">{isActive ? "Bergabunglah dengan Lamongan Trip dan mulai petualangan Anda" : "Selamat datang kembali di Lamongan Trip"}</p>
+          </div>{" "}
+          {/* Form */}
+          <div className={`auth-form-container ${isActive ? "register-mode" : "login-mode"}`}>
+            <form
+              onSubmit={isActive ? registerHandler : loginHandler}
+              className="auth-form">
+              {/* Username field - hanya untuk register */}
+              {isActive && (
+                <div className="form-group">
+                  <div className="input-wrapper">
+                    <UserOutlined className="input-icon" />
+                    <input
+                      type="text"
+                      placeholder="Username"
+                      name="username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      className="form-input"
+                      required
+                    />
+                  </div>
+                </div>
+              )}
+              {/* Email field */}
+              <div className="form-group">
+                <div className="input-wrapper">
+                  <MailOutlined className="input-icon" />
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    value={isActive ? email : loginEmail}
+                    onChange={(e) => (isActive ? setEmail(e.target.value) : setLoginEmail(e.target.value))}
+                    className="form-input"
+                    required
+                  />
+                </div>
+              </div>
+              {/* Password field */}
+              <div className="form-group">
+                <div className="input-wrapper">
+                  <LockOutlined className="input-icon" />
+                  <input
+                    type={isActive ? (showRegisterPassword ? "text" : "password") : showLoginPassword ? "text" : "password"}
+                    placeholder="Password"
+                    value={isActive ? password : loginPassword}
+                    onChange={(e) => (isActive ? setPassword(e.target.value) : setLoginPassword(e.target.value))}
+                    className="form-input"
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => {
+                      if (isActive) {
+                        setShowRegisterPassword(!showRegisterPassword);
+                      } else {
+                        setShowLoginPassword(!showLoginPassword);
+                      }
+                    }}>
+                    {isActive ? showRegisterPassword ? <EyeOutlined /> : <EyeInvisibleOutlined /> : showLoginPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                  </button>
+                </div>
+              </div>
+              {/* Confirm Password field - hanya untuk register */}
+              {isActive && (
+                <>
+                  <div className="form-group">
+                    <div className="input-wrapper">
+                      <LockOutlined className="input-icon" />
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        placeholder="Konfirmasi Password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className="form-input"
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="password-toggle"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                        {showConfirmPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Password match indicator */}
+                  {(password !== "" || confirmPassword !== "") && (
+                    <div className={`password-match ${isSame ? "match" : "no-match"}`}>
+                      {isSame ? <CheckCircleOutlined /> : <CloseCircleOutlined />}
+                      <span>{isSame ? "Password cocok" : "Password tidak cocok"}</span>
+                    </div>
+                  )}
+                </>
+              )}
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="submit-btn"
+                disabled={isActive ? isRegisterLoading : isLoginLoading}>
+                {(isActive ? isRegisterLoading : isLoginLoading) ? (
+                  <Loading />
+                ) : (
+                  <>
+                    <CompassOutlined />
+                    {isActive ? "Daftar Sekarang" : "Masuk"}
+                  </>
+                )}
+              </button>{" "}
+              {/* divider */}
+              {!isActive && (
+                <div className="auth-divider">
+                  <span>Atau</span>
+                </div>
+              )}
+              {/* Google Login - hanya untuk login */}
+              {!isActive && (
                 <button
                   type="button"
-                  className="social-button google"
-                  disabled={isRegisterLoading || isLoginLoading || isLoginSocialLoading || isGetUserGoogleDataLoading}
-                  onClick={() => {
-                    loginGoogle();
-                  }}>
-                  <GoogleSquareFilled style={{ fontSize: "20px" }} />
+                  className="google-btn"
+                  disabled={isLoginLoading || isLoginSocialLoading || isGetUserGoogleDataLoading}
+                  onClick={() => loginGoogle()}>
+                  <GoogleSquareFilled />
+                  <span>Lanjutkan dengan Google</span>
                 </button>
-                <FacebookLogin
-                  appId={import.meta.env.VITE_FACEBOOK_APP_ID}
-                  autoLoad={false}
-                  fields="name,email"
-                  callback={handleFacebookCallback}
-                  icon={<FacebookFilled style={{ fontSize: "20px" }} />}
-                  textButton=" "
-                  isDisabled={isRegisterLoading || isLoginLoading || isLoginSocialLoading || isGetUserGoogleDataLoading}
-                  cssClass="social-button facebook"
-                />
-              </div>
-            </div>
-          </form>
-        </div>
-        <div className="toggle-container">
-          <div className="toggle">
-            <div className="toggle-panel toggle-left">
-              <a href="/">
-                <HomeOutlined
-                  style={{
-                    fontSize: "2rem",
-                    color: "#fff",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                />
-              </a>
-              <h1>Selamat Datang!</h1>
-              <p>Sudah memiliki akun? </p>
+              )}
+            </form>
+          </div>
+          {/* Toggle between login and register */}
+          <div className="auth-toggle">
+            <p>
+              {isActive ? "Sudah punya akun? " : "Belum punya akun? "}
               <button
-                className="hidden"
-                id="login"
+                type="button"
+                className="toggle-btn"
                 onClick={toggleForm}>
-                Masuk
+                {isActive ? "Masuk di sini" : "Daftar di sini"}
               </button>
-            </div>
-            <div className="toggle-panel toggle-right">
-              <a href="/">
-                <HomeOutlined
-                  style={{
-                    fontSize: "2rem",
-                    color: "#fff",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                  disabled={isLoginLoading || isRegisterLoading}
-                />
-              </a>
-              <h1>Halo Boy!</h1>
-              <p>Belum Punya Akun? </p>
-              <button
-                disabled={isRegisterLoading || isLoginLoading}
-                className="hidden"
-                id="register"
-                onClick={toggleForm}>
-                Daftar
-              </button>
-            </div>
+            </p>
+          </div>
+          {/* Back to home */}
+          <div className="back-home">
+            <a
+              href="/"
+              className="home-link">
+              <HomeOutlined />
+              Kembali ke Beranda
+            </a>
           </div>
         </div>
       </div>
-    </FormContainer>
+    </div>
   );
 };
 

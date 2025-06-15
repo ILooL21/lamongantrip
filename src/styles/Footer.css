@@ -429,18 +429,22 @@
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
+  flex-wrap: wrap;
 }
 
 .copyright {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.3rem;
+  flex: 1;
+  min-width: 250px;
 }
 
 .copyright p {
   margin: 0;
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
 }
 
 .creator {
@@ -448,6 +452,18 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.85rem !important;
+}
+
+.creator-link {
+  color: #00e6cc;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.creator-link:hover {
+  color: #00b8a8;
+  text-decoration: underline;
 }
 
 .heart-icon {
@@ -483,6 +499,8 @@
 .footer-links-bottom {
   display: flex;
   gap: 2rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .footer-link-bottom {
@@ -490,11 +508,17 @@
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
 }
 
 .footer-link-bottom:hover {
   color: #00e6cc;
+  background: rgba(0, 230, 204, 0.1);
+  border-color: rgba(0, 230, 204, 0.3);
+  transform: translateY(-1px);
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
@@ -517,26 +541,41 @@
 
 @media (max-width: 768px) {
   .footer-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
     padding: 2rem 1rem;
+  }
+
+  /* Company info tetap full width di atas */
+  .company-info {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  /* Quick links dan contact info menjadi grid 2 kolom */
+  .quick-links {
+    grid-column: 1;
+  }
+
+  .contact-info {
+    grid-column: 2;
+    gap: 2.7rem !important;
+    text-align: center;
+  }
+
+  /* Social media di tengah bawah */
+  .social-section {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 1rem;
   }
 
   .footer-section {
     gap: 1rem;
   }
 
-  .footer-logo {
-    justify-content: center;
-    text-align: center;
-  }
-
   .footer-logo-text {
     align-items: center;
-  }
-
-  .footer-badges {
-    justify-content: center;
   }
 
   .footer-title {
@@ -546,20 +585,68 @@
 
   .footer-links {
     align-items: center;
-  }
-
-  .contact-items {
-    align-items: center;
-  }
-  .social-links {
-    max-width: 300px;
-    margin: 0 auto 2rem;
+    text-align: center;
   }
 
   .social-links-compact {
     justify-content: center;
-    gap: 0.8rem;
+    gap: 1rem;
     margin-bottom: 1rem;
+  }
+
+  .social-link-compact {
+    width: 50px;
+    height: 50px;
+  }
+
+  .social-icon-compact {
+    font-size: 1.3rem;
+  }
+
+  .footer-bottom-content {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+
+  .footer-links-bottom {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .copyright {
+    order: 1;
+  }
+
+  .footer-links-bottom {
+    order: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-container {
+    padding: 1.5rem 1rem;
+    gap: 1.5rem;
+  }
+
+  .footer-description {
+    font-size: 0.9rem;
+    text-align: justify;
+  }
+
+  .badge {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .footer-badges {
+    gap: 0.5rem;
+  }
+
+  .social-links-compact {
+    gap: 0.8rem;
   }
 
   .social-link-compact {
@@ -571,85 +658,22 @@
     font-size: 1.2rem;
   }
 
-  .newsletter {
-    text-align: center;
-  }
-
-  .newsletter-compact {
-    margin-top: 1rem;
-  }
-
   .footer-bottom-content {
-    flex-direction: column;
+    padding: 1.2rem 1rem;
     gap: 1rem;
+  }
+
+  .copyright {
     text-align: center;
   }
 
   .footer-links-bottom {
-    flex-wrap: wrap;
-    justify-content: center;
     gap: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .footer-container {
-    padding: 1.5rem 1rem;
+    justify-content: center;
   }
 
-  .footer-brand {
-    font-size: 1.5rem;
-  }
-
-  .footer-description {
-    font-size: 0.9rem;
-  }
-
-  .badge {
-    font-size: 0.8rem;
+  .footer-link-bottom {
+    font-size: 0.85rem;
     padding: 0.4rem 0.8rem;
-  }
-
-  .footer-badges {
-    gap: 0.5rem;
-  }
-  .social-links {
-    gap: 0.5rem;
-  }
-
-  .social-links-compact {
-    gap: 0.6rem;
-  }
-
-  .social-link-compact {
-    width: 40px;
-    height: 40px;
-  }
-
-  .social-icon-compact {
-    font-size: 1.1rem;
-  }
-
-  .social-link {
-    padding: 0.6rem 0.8rem;
-    font-size: 0.85rem;
-  }
-
-  .newsletter {
-    padding: 1rem;
-  }
-
-  .newsletter-btn {
-    padding: 0.7rem 1.2rem;
-    font-size: 0.85rem;
-  }
-
-  .newsletter-compact {
-    padding: 0.8rem;
-  }
-
-  .newsletter-btn-compact {
-    padding: 0.5rem 1rem;
-    font-size: 0.75rem;
   }
 }

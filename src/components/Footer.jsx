@@ -63,7 +63,7 @@ const Footer = () => {
 
         {/* Contact Info Section */}
         <div className="footer-section contact-info">
-          <h4 className="footer-title">
+          <h4 className="footer-title contact-title">
             <PhoneOutlined className="footer-icon" />
             Hubungi Kami
           </h4>
