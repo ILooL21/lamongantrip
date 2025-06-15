@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import { useCreateArticleMutation, useGetArticleByIdMutation, useUpdateArticleMutation } from "../../../slices/articleApiSlice";
 import { useEffect, useMemo, useState } from "react";
 import { Button, Modal, Select, Input, Radio, Tag } from "antd";
-import addNotification from "react-push-notification";
 import Swal from "sweetalert2";
 import DefaultEditor, { createButton } from "react-simple-wysiwyg";
 
@@ -131,17 +130,6 @@ const ArticleModal = ({ isDetailModal, isEditModal, isAddModal, id_artikel, onCl
     try {
       const res = await createArticleData(formArticleData);
       if (res) {
-        addNotification({
-          title: "Artikel Baru",
-          subtitle: "Artikel baru telah ditambahkan",
-          message: formData.judul,
-          duration: 5000,
-          theme: "darkblue",
-          native: true,
-          onClick: () => {
-            window.open(`/article/${res.data.id_artikel}`, "_blank");
-          },
-        });
         Swal.fire({
           icon: "success",
           title: "Berhasil",
