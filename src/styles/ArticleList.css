@@ -355,6 +355,12 @@
   transition: all 0.3s ease;
   border: 1px solid rgba(0, 127, 115, 0.1);
   animation: slideUp 0.6s ease-out;
+  max-width: 370px;
+  min-width: 0;
+  height: 370px;
+  max-height: 370px;
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes slideUp {
@@ -377,7 +383,9 @@
 /* ===== ARTICLE IMAGE ===== */
 .article-image {
   position: relative;
-  height: 220px;
+  height: 160px;
+  min-height: 160px;
+  max-height: 160px;
   overflow: hidden;
   margin-bottom: 0 !important;
 }
@@ -436,17 +444,20 @@
 /* ===== ARTICLE CONTENT ===== */
 .article-content {
   margin: 0 !important;
-  padding: 1.5rem;
+  padding: 1.1rem 1.2rem 1.2rem 1.2rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  flex: 1 1 auto;
+  max-height: 210px;
+  overflow: hidden;
 }
 
 .article-meta {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.2rem;
   font-size: clamp(0.45rem, 2vw, 0.65rem);
   color: #666;
 }
@@ -459,10 +470,10 @@
 }
 
 .article-title {
-  margin: 0 0 1rem 0;
-  font-size: 1.08rem;
+  margin: 0.5rem 0 0.7rem 0;
+  font-size: 1.1rem;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   line-clamp: 3;
@@ -507,9 +518,12 @@
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
-  margin-top: 1.2rem;
+  margin-top: 0.5rem;
   margin-bottom: 0.2rem;
-  min-height: 36px;
+  max-height: 1.7em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tags-icon {
