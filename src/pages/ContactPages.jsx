@@ -113,9 +113,9 @@ const ContactPages = () => {
         <div className="social-media-section">
           <h2 className="section-title">
             <SendOutlined className="section-icon" />
-            Ikuti Media Sosial Kami
+            Ikuti Media Sosial Pengembang
           </h2>
-          <p className="section-desc">Dapatkan update destinasi terbaru, tips wisata, dan penawaran eksklusif</p>
+          <p className="section-desc">Sampaikan pesan, kritik, atau saran melalui media sosial kami. Agar kami dapat meningkatkan layanan website kami.</p>
 
           <div className="social-links-grid">
             <a
@@ -126,7 +126,7 @@ const ContactPages = () => {
               <InstagramOutlined className="social-icon" />
               <div className="social-content">
                 <h4>Instagram</h4>
-                <span>@lamongantrip</span>
+                <span>@mkrilul</span>
               </div>
             </a>
 
@@ -138,7 +138,7 @@ const ContactPages = () => {
               <FacebookFilled className="social-icon" />
               <div className="social-content">
                 <h4>Facebook</h4>
-                <span>Lamongan Trip</span>
+                <span>Muhammad Kholilur Rohman</span>
               </div>
             </a>
 
@@ -150,7 +150,7 @@ const ContactPages = () => {
               <XOutlined className="social-icon" />
               <div className="social-content">
                 <h4>Twitter</h4>
-                <span>@lamongantrip</span>
+                <span>@DeusExMachine69</span>
               </div>
             </a>
           </div>
